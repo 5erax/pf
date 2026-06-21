@@ -63,7 +63,7 @@ export function Navbar() {
               }}
               className="z-10 text-sm font-semibold tracking-wide text-white"
             >
-              Lagna<span className="text-zinc-500">.portfolio</span>
+              lagna
             </a>
 
             <div className="pointer-events-auto absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 md:block">
