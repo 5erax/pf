@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
 type AccordionItemData = {
   id: number;
   title: string;
@@ -44,10 +47,10 @@ const accordionItems: AccordionItemData[] = [
 type AccordionItemProps = {
   item: AccordionItemData;
   isActive: boolean;
-  onMouseEnter: () => void;
+  onActivate: () => void;
 };
 
-function AccordionItem({ item, isActive, onMouseEnter }: AccordionItemProps) {
+function AccordionItem({ item, isActive, onActivate }: AccordionItemProps) {
   const handleImageError = (
     event: React.SyntheticEvent<HTMLImageElement, Event>
   ) => {
@@ -57,19 +60,22 @@ function AccordionItem({ item, isActive, onMouseEnter }: AccordionItemProps) {
   };
 
   return (
-    <div
-      className={`
-        relative h-[450px] cursor-pointer overflow-hidden rounded-2xl
-        border border-white/10 bg-black/40
-        transition-all duration-700 ease-in-out
-        ${isActive ? "w-[400px]" : "w-[60px]"}
-      `}
-      onMouseEnter={onMouseEnter}
+    <button
+      type="button"
+      aria-pressed={isActive}
+      aria-label={`Show ${item.title}`}
+      className={cn(
+        "relative h-[360px] shrink-0 snap-center cursor-pointer overflow-hidden rounded-2xl border border-white/15 bg-black/40 text-left transition-[width] duration-500 ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:h-[420px]",
+        isActive ? "w-[78vw] max-w-[320px] sm:w-[360px]" : "w-14 sm:w-16",
+      )}
+      onClick={onActivate}
+      onFocus={onActivate}
+      onMouseEnter={onActivate}
     >
       <img
         src={item.imageUrl}
-        alt={item.title}
-        className="absolute inset-0 h-full w-full object-cover"
+        alt=""
+        className="absolute inset-0 size-full object-cover"
         onError={handleImageError}
       />
 
@@ -77,19 +83,16 @@ function AccordionItem({ item, isActive, onMouseEnter }: AccordionItemProps) {
       <div className="absolute inset-0 bg-[linear-gradient(180deg,_transparent_0%,_rgba(0,0,0,0.72)_100%)]" />
 
       <span
-        className={`
-          absolute whitespace-nowrap text-lg font-semibold text-white
-          transition-all duration-300 ease-in-out
-          ${
-            isActive
-              ? "bottom-6 left-1/2 -translate-x-1/2 rotate-0"
-              : "bottom-24 left-1/2 w-auto -translate-x-1/2 rotate-90 text-left"
-          }
-        `}
+        className={cn(
+          "absolute whitespace-nowrap text-lg font-semibold text-white transition-all duration-300 ease-out",
+          isActive
+            ? "bottom-6 left-1/2 -translate-x-1/2 rotate-0"
+            : "bottom-24 left-1/2 -translate-x-1/2 rotate-90",
+        )}
       >
         {item.title}
       </span>
-    </div>
+    </button>
   );
 }
 
@@ -102,56 +105,49 @@ export function LandingAccordionItem({
 }: LandingAccordionItemProps) {
   const [activeIndex, setActiveIndex] = useState(4);
 
-  const handleItemHover = (index: number) => {
+  const handleItemActivate = (index: number) => {
     setActiveIndex(index);
   };
 
   return (
     <div
-      className={`
-        overflow-hidden rounded-[2rem] border border-white/10
-        bg-white/[0.04] font-sans shadow-2xl shadow-black/30 backdrop-blur-xl
-        ${className}
-      `}
+      className={cn(
+        "overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] font-sans shadow-2xl shadow-black/30 backdrop-blur-xl",
+        className,
+      )}
     >
-      <section className="px-4 py-12 md:py-20">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-12 md:flex-row">
-          <div className="w-full text-center md:w-1/2 md:text-left">
+      <section className="px-4 py-10 sm:px-6 md:py-16">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-10 lg:flex-row">
+          <div className="w-full text-center lg:w-2/5 lg:text-left">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-zinc-500">
               AI Workflow
             </p>
 
-            <h1 className="text-4xl font-bold leading-tight tracking-tighter text-white md:text-6xl">
+            <h2 className="text-3xl font-bold leading-tight tracking-tighter text-white sm:text-4xl md:text-5xl">
               Accelerate Gen-AI Tasks on Any Device
-            </h1>
+            </h2>
 
             <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-zinc-400 md:mx-0">
               Build high-performance AI apps on-device without the hassle of
               model compression or edge deployment.
             </p>
 
-            <div className="mt-8">
-              <a
-                href="#contact"
-                className="
-                  inline-block rounded-lg bg-white px-8 py-3 font-semibold
-                  text-black shadow-lg transition-colors duration-300
-                  hover:bg-zinc-200
-                "
-              >
-                Contact Us
-              </a>
-            </div>
+            <Button asChild size="lg" className="mt-8 rounded-full px-6">
+              <a href="#contact">Contact me</a>
+            </Button>
           </div>
 
-          <div className="w-full md:w-1/2">
-            <div className="flex flex-row items-center justify-center gap-4 overflow-x-auto p-4">
+          <div className="w-full min-w-0 lg:w-3/5">
+            <div
+              aria-label="AI workflow examples"
+              className="flex snap-x snap-mandatory items-center gap-3 overflow-x-auto px-2 py-4 [scrollbar-width:thin] sm:gap-4"
+            >
               {accordionItems.map((item, index) => (
                 <AccordionItem
                   key={item.id}
                   item={item}
                   isActive={index === activeIndex}
-                  onMouseEnter={() => handleItemHover(index)}
+                  onActivate={() => handleItemActivate(index)}
                 />
               ))}
             </div>

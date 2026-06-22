@@ -54,7 +54,10 @@ export function Navbar() {
     <>
       <header className="sticky top-0 z-50 border-b border-white/10 bg-black/45 backdrop-blur-2xl">
         <Container>
-          <nav className="relative flex h-20 items-center justify-between">
+          <nav
+            aria-label="Primary"
+            className="relative flex h-16 items-center justify-between sm:h-20"
+          >
             <a
               href="#home"
               onClick={(event) => {
@@ -108,13 +111,16 @@ export function Navbar() {
         </Container>
       </header>
 
-      <div className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2 md:hidden">
+      <nav
+        aria-label="Mobile sections"
+        className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 md:hidden"
+      >
         <TubelightNavBar
           items={navItems}
           activeItemName={activeItemName}
           onNavigate={handleNavigate}
         />
-      </div>
+      </nav>
     </>
   );
 }

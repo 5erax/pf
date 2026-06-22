@@ -59,9 +59,9 @@ const profileStats = [
 
 export function HeroSection() {
   return (
-    <section id="home" className="relative overflow-hidden py-24 sm:py-32">
+    <section id="home" className="relative overflow-hidden pb-20 pt-16 sm:py-28">
       <Container>
-        <div className="grid gap-16 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
+        <div className="grid gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-center xl:gap-16">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -72,11 +72,11 @@ export function HeroSection() {
               {profile.status}
             </Badge>
 
-            <p className="mb-5 text-sm font-semibold uppercase tracking-[0.28em] text-zinc-500">
+            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-zinc-400 sm:text-sm sm:tracking-[0.28em]">
               {profile.role} · {profile.location}
             </p>
 
-            <h1 className="max-w-4xl text-balance text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
+            <h1 className="max-w-4xl text-balance text-4xl font-semibold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
               {profile.headline}
             </h1>
 
@@ -92,7 +92,7 @@ export function HeroSection() {
               >
                 <a href="#projects">
                   View selected work
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight data-icon="inline-end" />
                 </a>
               </Button>
 
@@ -103,7 +103,7 @@ export function HeroSection() {
                 className="rounded-full border-white/10 bg-white/[0.05] px-6 text-white backdrop-blur-md hover:bg-white/[0.1]"
               >
                 <a href={profile.github} target="_blank" rel="noreferrer">
-                  <FaGithub className="mr-2 h-4 w-4" />
+                  <FaGithub data-icon="inline-start" />
                   GitHub
                 </a>
               </Button>
