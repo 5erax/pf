@@ -10,29 +10,39 @@ export function useActiveSection(sectionIds: string[]) {
 
     if (sections.length === 0) return;
 
-    const updateFromReadingLine = () => {
-      const readingLine = window.innerHeight * 0.28;
-      const currentSection = sections.find((section) => {
-        const bounds = section.getBoundingClientRect();
-        return bounds.top <= readingLine && bounds.bottom >= readingLine;
-      });
+    const visibleSections = new Map<string, IntersectionObserverEntry>();
+    const updateActiveSection = () => {
+      const readingLine = window.innerHeight * 0.38;
+      const currentSection = [...visibleSections.values()]
+        .filter((entry) => entry.isIntersecting)
+        .sort((first, second) => {
+          const firstDistance = Math.abs(
+            first.boundingClientRect.top + first.boundingClientRect.height / 2 - readingLine,
+          );
+          const secondDistance = Math.abs(
+            second.boundingClientRect.top + second.boundingClientRect.height / 2 - readingLine,
+          );
+          return firstDistance - secondDistance;
+        })[0];
 
-      if (currentSection) {
-        setActiveSection((previousSection) =>
-          previousSection === currentSection.id
-            ? previousSection
-            : currentSection.id,
-        );
-      }
+      if (!currentSection) return;
+
+      setActiveSection((previousSection) =>
+        previousSection === currentSection.target.id
+          ? previousSection
+          : currentSection.target.id,
+      );
     };
 
-    const observer = new IntersectionObserver(updateFromReadingLine, {
-      rootMargin: "-27% 0px -71% 0px",
-      threshold: 0,
-    });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => visibleSections.set(entry.target.id, entry));
+        updateActiveSection();
+      },
+      { rootMargin: "-12% 0px -12% 0px", threshold: [0, 0.2, 0.45, 0.7] },
+    );
 
     sections.forEach((section) => observer.observe(section));
-    updateFromReadingLine();
 
     return () => observer.disconnect();
   }, [sectionIds]);
