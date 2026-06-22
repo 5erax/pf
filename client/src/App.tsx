@@ -1,4 +1,5 @@
 import { MainLayout } from "@/components/layout/MainLayout";
+import { Reveal } from "@/components/common/Reveal";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { HeroSection } from "@/components/sections/HeroSection";
@@ -10,11 +11,21 @@ function App() {
   return (
     <MainLayout>
       <HeroSection />
-      <AboutSection />
-      <SkillsSection />
-      <InteractiveImageAccordionSection />
-      <ProjectsSection />
-      <ContactSection />
+      <Reveal>
+        <AboutSection />
+      </Reveal>
+      <Reveal>
+        <SkillsSection />
+      </Reveal>
+      <Reveal>
+        <InteractiveImageAccordionSection />
+      </Reveal>
+      <Reveal>
+        <ProjectsSection />
+      </Reveal>
+      <Reveal>
+        <ContactSection />
+      </Reveal>
     </MainLayout>
   );
 }

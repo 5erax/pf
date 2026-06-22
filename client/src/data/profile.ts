@@ -12,7 +12,8 @@ export const profile = {
   headline:
     "Fullstack Developer building clean, polished, and maintainable web applications.",
   summary:
-    "I build modern web applications with React, TypeScript, Node.js, and Spring Boot. I care about clean code, practical UI/UX, reusable architecture, and interfaces that feel smooth, clear, and production-ready.",
-  currentFocus: "Building production-grade web and mobile applications",
-  currentlyBuilding: "FinGenie — AI expense app",
+    "I build modern web applications with React, TypeScript, Node.js, and MongoDB. I care about clean code, practical UI/UX, reusable architecture, and interfaces that feel smooth, clear, and production-ready.",
+  currentFocus:
+    "A medication companion focused on clear schedules, reminders, and safer daily routines.",
+  currentlyBuilding: "MediMate",
 };

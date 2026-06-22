@@ -3,6 +3,14 @@
 import { useEffect, useRef } from "react"
 import * as THREE from "three"
 
+type ShaderUniforms = {
+  resolution: { value: [number, number] }
+  time: { value: number }
+  xScale: { value: number }
+  yScale: { value: number }
+  distortion: { value: number }
+}
+
 export function WebGLShader() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const sceneRef = useRef<{
@@ -10,7 +18,7 @@ export function WebGLShader() {
     camera: THREE.OrthographicCamera | null
     renderer: THREE.WebGLRenderer | null
     mesh: THREE.Mesh | null
-    uniforms: any
+    uniforms: ShaderUniforms | null
     animationId: number | null
   }>({
     scene: null,
@@ -55,7 +63,7 @@ export function WebGLShader() {
         float g = 0.05 / abs(p.y + sin((gx + time) * xScale) * yScale);
         float b = 0.05 / abs(p.y + sin((bx + time) * xScale) * yScale);
         
-        gl_FragColor = vec4(r, g, b, 1.0);
+        gl_FragColor = vec4(r * 0.3, g * 0.3, b * 0.3, 1.0);
       }
     `
 

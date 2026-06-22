@@ -13,6 +13,7 @@ import { Container } from "@/components/common/Container";
 import { SpotlightCard } from "@/components/common/SpotlightCard";
 import { Button } from "@/components/ui/button";
 import { profile } from "@/data/profile";
+import { scrollToSection } from "@/lib/scroll";
 
 const contactMethods = [
   {
@@ -132,9 +133,15 @@ export function ContactSection() {
                     variant="outline"
                     className="rounded-full border-white/10 bg-white/[0.05] px-6 text-white hover:bg-white/[0.1]"
                   >
-                    <a href="#projects">
+                    <a
+                      href="#projects"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        scrollToSection("#projects");
+                      }}
+                    >
                       View projects
-                      <ArrowRight className="ml-2 h-4 w-4" />
+                      <ArrowRight data-icon="inline-end" />
                     </a>
                   </Button>
                 </div>

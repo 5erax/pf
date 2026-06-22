@@ -1,11 +1,11 @@
 import type { LucideIcon } from "lucide-react";
 import {
+  Blocks,
   CheckCircle2,
   Code2,
   Layers3,
   MonitorSmartphone,
   ServerCog,
-  Sparkles,
 } from "lucide-react";
 
 import { Container } from "@/components/common/Container";
@@ -96,8 +96,7 @@ function CodePreviewCard() {
           <p className="pl-4">
             <span className="text-zinc-400">stack:</span>{" "}
             <span className="text-white">
-              [&quot;React&quot;, &quot;TypeScript&quot;, &quot;Spring
-              Boot&quot;]
+              [&quot;React&quot;, &quot;TypeScript&quot;, &quot;Node.js&quot;]
             </span>
             ,
           </p>
@@ -136,7 +135,7 @@ export function AboutSection() {
             <p className="max-w-2xl text-base leading-8 text-zinc-400 sm:text-lg">
               I am {profile.name}, also known as @{profile.alias}. I focus on
               building modern fullstack applications with React, TypeScript,
-              Node.js, and Spring Boot. I care about clean UI, maintainable
+              Node.js, and MongoDB. I care about clean UI, maintainable
               code, practical architecture, and user flows that feel simple and
               reliable.
             </p>
@@ -150,7 +149,7 @@ export function AboutSection() {
               <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
                 <div>
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-400/20 bg-cyan-400/10">
-                    <Sparkles className="h-6 w-6 text-cyan-300" />
+                    <Blocks className="size-6 text-cyan-300" />
                   </div>
 
                   <h3 className="mt-6 text-2xl font-semibold tracking-tight text-white">

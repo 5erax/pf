@@ -1,10 +1,11 @@
-import { ArrowRight, Eye, Layers3, Sparkles } from "lucide-react";
+import { ArrowRight, Eye, Layers3, Workflow } from "lucide-react";
 
 import { Container } from "@/components/common/Container";
 import { SpotlightCard } from "@/components/common/SpotlightCard";
 import { LandingAccordionItem } from "@/components/interactive-image-accordion";
 import { Button } from "@/components/ui/button";
 import { profile } from "@/data/profile";
+import { scrollToSection } from "@/lib/scroll";
 
 const showcasePoints = [
   {
@@ -18,7 +19,7 @@ const showcasePoints = [
     value: "Present features, case studies, and UI decisions clearly.",
   },
   {
-    icon: Sparkles,
+    icon: Workflow,
     label: "Interactive UI",
     value: "Add a memorable portfolio experience without losing clarity.",
   },
@@ -50,9 +51,15 @@ export function InteractiveImageAccordionSection() {
                 asChild
                 className="rounded-full bg-white px-5 text-black hover:bg-zinc-200"
               >
-                <a href="#projects">
+                <a
+                  href="#projects"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    scrollToSection("#projects");
+                  }}
+                >
                   View projects
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight data-icon="inline-end" />
                 </a>
               </Button>
 

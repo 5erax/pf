@@ -5,11 +5,11 @@ export const skillGroups = [
   },
   {
     title: "Backend",
-    skills: ["Node.js", "Spring Boot", "PostgreSQL", "MongoDB"],
+    skills: ["Node.js", "Express", "MongoDB", "REST APIs"],
   },
   {
     title: "DevOps & Tools",
-    skills: ["Docker", "Git", "GitHub Actions", "Vite", "VS Code"],
+    skills: ["Git", "GitHub Actions", "Vite", "Vercel", "VS Code"],
   },
   {
     title: "Engineering Practices",

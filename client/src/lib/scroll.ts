@@ -1,4 +1,49 @@
-const HEADER_OFFSET = 96;
+let activeScrollFrame: number | null = null;
+
+function stopActiveScroll() {
+  if (activeScrollFrame !== null) {
+    window.cancelAnimationFrame(activeScrollFrame);
+    activeScrollFrame = null;
+  }
+
+  window.removeEventListener("wheel", stopActiveScroll);
+  window.removeEventListener("touchstart", stopActiveScroll);
+}
+
+function animateScrollTo(targetTop: number, prefersReducedMotion: boolean) {
+  stopActiveScroll();
+
+  if (prefersReducedMotion) {
+    window.scrollTo({ top: targetTop, behavior: "auto" });
+    return;
+  }
+
+  const startTop = window.scrollY;
+  const distance = targetTop - startTop;
+  const duration = Math.min(850, Math.max(420, Math.abs(distance) * 0.12));
+  const startTime = performance.now();
+
+  window.addEventListener("wheel", stopActiveScroll, { passive: true });
+  window.addEventListener("touchstart", stopActiveScroll, { passive: true });
+
+  const step = (currentTime: number) => {
+    const progress = Math.min((currentTime - startTime) / duration, 1);
+    const easedProgress = 1 - Math.pow(1 - progress, 5);
+    const nextTop = startTop + distance * easedProgress;
+
+    document.documentElement.scrollTop = nextTop;
+    document.body.scrollTop = nextTop;
+
+    if (progress < 1) {
+      activeScrollFrame = window.requestAnimationFrame(step);
+      return;
+    }
+
+    stopActiveScroll();
+  };
+
+  activeScrollFrame = window.requestAnimationFrame(step);
+}
 
 export function getSectionIdFromHash(hash: string) {
   return hash.replace("#", "");
@@ -14,10 +59,7 @@ export function scrollToSection(hash: string) {
   if (hash === "#" || hash === "#home") {
     window.history.pushState(null, "", "#home");
 
-    window.scrollTo({
-      top: 0,
-      behavior: prefersReducedMotion ? "auto" : "smooth",
-    });
+    animateScrollTo(0, prefersReducedMotion);
 
     return;
   }
@@ -28,12 +70,11 @@ export function scrollToSection(hash: string) {
   if (!element) return;
 
   const elementTop = element.getBoundingClientRect().top + window.scrollY;
-  const targetTop = Math.max(elementTop - HEADER_OFFSET, 0);
+  const headerHeight = document.querySelector("header")?.getBoundingClientRect()
+    .height ?? 80;
+  const targetTop = Math.max(elementTop - headerHeight - 16, 0);
 
   window.history.pushState(null, "", hash);
 
-  window.scrollTo({
-    top: targetTop,
-    behavior: prefersReducedMotion ? "auto" : "smooth",
-  });
+  animateScrollTo(targetTop, prefersReducedMotion);
 }

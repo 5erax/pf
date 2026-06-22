@@ -3,10 +3,11 @@ import {
   CheckCircle2,
   Code2,
   Database,
+  HeartPulse,
   Mail,
   MapPin,
   ServerCog,
-  Sparkles,
+  Smartphone,
 } from "lucide-react";
 import { motion } from "motion/react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
@@ -16,10 +17,11 @@ import { SpotlightCard } from "@/components/common/SpotlightCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { profile } from "@/data/profile";
+import { scrollToSection } from "@/lib/scroll";
 
 const highlights = [
   "React + TypeScript",
-  "Node.js + Spring Boot",
+  "Node.js + MongoDB",
   "Product-focused UI",
 ];
 
@@ -37,12 +39,12 @@ const stackItems = [
     icon: ServerCog,
   },
   {
-    label: "Spring Boot",
-    icon: ServerCog,
+    label: "MongoDB",
+    icon: Database,
   },
   {
-    label: "PostgreSQL",
-    icon: Database,
+    label: "React Native",
+    icon: Smartphone,
   },
 ];
 
@@ -90,7 +92,13 @@ export function HeroSection() {
                 size="lg"
                 className="rounded-full bg-white px-6 text-black shadow-lg shadow-black/20 hover:bg-zinc-200"
               >
-                <a href="#projects">
+                <a
+                  href="#projects"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    scrollToSection("#projects");
+                  }}
+                >
                   View selected work
                   <ArrowRight data-icon="inline-end" />
                 </a>
@@ -206,7 +214,7 @@ export function HeroSection() {
                   <div>
                     <div className="flex items-center gap-3">
                       <div className="flex h-10 w-10 items-center justify-center rounded-full border border-emerald-400/20 bg-emerald-400/10">
-                        <Sparkles className="h-5 w-5 text-emerald-300" />
+                        <HeartPulse className="size-5 text-emerald-300" />
                       </div>
 
                       <div>

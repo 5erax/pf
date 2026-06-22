@@ -1,13 +1,14 @@
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowUpRight,
-  Code2,
-  Database,
   GitBranch,
   Layers3,
   MonitorSmartphone,
+  Orbit,
   ServerCog,
-  Sparkles,
+  Target,
+  TrendingUp,
+  Wrench,
 } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 
@@ -26,7 +27,7 @@ type ProjectVisual = {
 
 const projectVisuals: ProjectVisual[] = [
   {
-    icon: Sparkles,
+    icon: Orbit,
     label: "AI Product",
     subtitle: "Smart workflows · Clean dashboard · Product logic",
     gradient:
@@ -54,6 +55,12 @@ const projectVisuals: ProjectVisual[] = [
 function getProjectVisual(index: number) {
   return projectVisuals[index % projectVisuals.length];
 }
+
+const caseStudyMeta = [
+  { key: "challenge", label: "Challenge", icon: Target },
+  { key: "solution", label: "Solution", icon: Wrench },
+  { key: "outcome", label: "Outcome", icon: TrendingUp },
+] as const;
 
 function ProjectMockup({
   index,
@@ -209,35 +216,24 @@ export function ProjectsSection() {
                       </p>
 
                       <div className="mt-7 grid gap-3 sm:grid-cols-3">
-                        <div className="rounded-2xl border border-white/10 bg-black/25 p-4">
-                          <Code2 className="h-5 w-5 text-zinc-400" />
-                          <p className="mt-3 text-sm font-medium text-white">
-                            UI structure
-                          </p>
-                          <p className="mt-2 text-sm leading-6 text-zinc-500">
-                            Reusable components and clear layout decisions.
-                          </p>
-                        </div>
+                        {caseStudyMeta.map((item) => {
+                          const Icon = item.icon;
 
-                        <div className="rounded-2xl border border-white/10 bg-black/25 p-4">
-                          <ServerCog className="h-5 w-5 text-zinc-400" />
-                          <p className="mt-3 text-sm font-medium text-white">
-                            Integration
-                          </p>
-                          <p className="mt-2 text-sm leading-6 text-zinc-500">
-                            API-ready flow with real product requirements.
-                          </p>
-                        </div>
-
-                        <div className="rounded-2xl border border-white/10 bg-black/25 p-4">
-                          <Database className="h-5 w-5 text-zinc-400" />
-                          <p className="mt-3 text-sm font-medium text-white">
-                            Data handling
-                          </p>
-                          <p className="mt-2 text-sm leading-6 text-zinc-500">
-                            Organized state, forms, and backend data flow.
-                          </p>
-                        </div>
+                          return (
+                            <div
+                              key={item.key}
+                              className="rounded-2xl border border-white/10 bg-black/25 p-4"
+                            >
+                              <Icon className="size-5 text-zinc-400" />
+                              <p className="mt-3 text-sm font-medium text-white">
+                                {item.label}
+                              </p>
+                              <p className="mt-2 text-sm leading-6 text-zinc-400">
+                                {project.caseStudy[item.key]}
+                              </p>
+                            </div>
+                          );
+                        })}
                       </div>
 
                       <div className="mt-7 flex flex-wrap gap-2">

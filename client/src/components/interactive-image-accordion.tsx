@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { scrollToSection } from "@/lib/scroll";
 
 type AccordionItemData = {
   id: number;
@@ -65,8 +66,8 @@ function AccordionItem({ item, isActive, onActivate }: AccordionItemProps) {
       aria-pressed={isActive}
       aria-label={`Show ${item.title}`}
       className={cn(
-        "relative h-[360px] shrink-0 snap-center cursor-pointer overflow-hidden rounded-2xl border border-white/15 bg-black/40 text-left transition-[width] duration-500 ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:h-[420px]",
-        isActive ? "w-[78vw] max-w-[320px] sm:w-[360px]" : "w-14 sm:w-16",
+        "relative w-full min-w-0 cursor-pointer overflow-hidden rounded-2xl border border-white/15 bg-black/40 text-left transition-[height,flex-grow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white md:h-[420px]",
+        isActive ? "h-72 md:flex-[5]" : "h-16 md:flex-[0.72]",
       )}
       onClick={onActivate}
       onFocus={onActivate}
@@ -87,7 +88,7 @@ function AccordionItem({ item, isActive, onActivate }: AccordionItemProps) {
           "absolute whitespace-nowrap text-lg font-semibold text-white transition-all duration-300 ease-out",
           isActive
             ? "bottom-6 left-1/2 -translate-x-1/2 rotate-0"
-            : "bottom-24 left-1/2 -translate-x-1/2 rotate-90",
+            : "bottom-1/2 left-5 translate-y-1/2 rotate-0 md:bottom-24 md:left-1/2 md:-translate-x-1/2 md:translate-y-0 md:rotate-90",
         )}
       >
         {item.title}
@@ -133,14 +134,22 @@ export function LandingAccordionItem({
             </p>
 
             <Button asChild size="lg" className="mt-8 rounded-full px-6">
-              <a href="#contact">Contact me</a>
+              <a
+                href="#contact"
+                onClick={(event) => {
+                  event.preventDefault();
+                  scrollToSection("#contact");
+                }}
+              >
+                Contact me
+              </a>
             </Button>
           </div>
 
           <div className="w-full min-w-0 lg:w-3/5">
             <div
               aria-label="AI workflow examples"
-              className="flex snap-x snap-mandatory items-center gap-3 overflow-x-auto px-2 py-4 [scrollbar-width:thin] sm:gap-4"
+              className="flex w-full min-w-0 flex-col gap-3 py-4 md:flex-row md:items-stretch md:gap-4"
             >
               {accordionItems.map((item, index) => (
                 <AccordionItem
