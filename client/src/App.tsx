@@ -10,7 +10,9 @@ import { SkillsSection } from "@/components/sections/SkillsSection";
 function App() {
   return (
     <MainLayout>
-      <HeroSection />
+      <Reveal>
+        <HeroSection />
+      </Reveal>
       <Reveal>
         <AboutSection />
       </Reveal>

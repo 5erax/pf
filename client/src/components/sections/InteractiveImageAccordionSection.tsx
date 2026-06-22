@@ -27,7 +27,7 @@ const showcasePoints = [
 
 export function InteractiveImageAccordionSection() {
   return (
-    <section className="relative border-t border-white/10 py-24">
+    <section id="showcase" className="relative border-t border-white/10 py-24">
       <Container>
         <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
           <div>

@@ -20,7 +20,7 @@ function animateScrollTo(targetTop: number, prefersReducedMotion: boolean) {
 
   const startTop = window.scrollY;
   const distance = targetTop - startTop;
-  const duration = Math.min(850, Math.max(420, Math.abs(distance) * 0.12));
+  const duration = Math.min(620, Math.max(280, Math.abs(distance) * 0.06));
   const startTime = performance.now();
 
   window.addEventListener("wheel", stopActiveScroll, { passive: true });
@@ -70,9 +70,7 @@ export function scrollToSection(hash: string) {
   if (!element) return;
 
   const elementTop = element.getBoundingClientRect().top + window.scrollY;
-  const headerHeight = document.querySelector("header")?.getBoundingClientRect()
-    .height ?? 80;
-  const targetTop = Math.max(elementTop - headerHeight - 16, 0);
+  const targetTop = Math.max(elementTop - 16, 0);
 
   window.history.pushState(null, "", hash);
 

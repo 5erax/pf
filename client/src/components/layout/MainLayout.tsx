@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import BackgroundPaperShaders from "@/components/background-paper-shaders";
+import { ContextualSectionNav } from "@/components/common/ContextualSectionNav";
 import { ScrollProgress } from "@/components/common/ScrollProgress";
 import { ScrollToTopButton } from "@/components/common/ScrollToTopButton";
 import { Footer } from "@/components/layout/Footer";
@@ -31,6 +32,7 @@ export function MainLayout({ children }: MainLayoutProps) {
       </div>
 
       <ScrollToTopButton />
+      <ContextualSectionNav />
     </div>
   );
 }

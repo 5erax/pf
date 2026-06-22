@@ -1,38 +1,19 @@
-import { useEffect, useState } from "react";
+import { motion, useReducedMotion, useScroll, useSpring } from "motion/react";
 
 export function ScrollProgress() {
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const updateProgress = () => {
-      const scrollTop = window.scrollY;
-      const scrollHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-
-      if (scrollHeight <= 0) {
-        setProgress(0);
-        return;
-      }
-
-      setProgress((scrollTop / scrollHeight) * 100);
-    };
-
-    updateProgress();
-
-    window.addEventListener("scroll", updateProgress, { passive: true });
-    window.addEventListener("resize", updateProgress);
-
-    return () => {
-      window.removeEventListener("scroll", updateProgress);
-      window.removeEventListener("resize", updateProgress);
-    };
-  }, []);
+  const { scrollYProgress } = useScroll();
+  const shouldReduceMotion = useReducedMotion();
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 180,
+    damping: 32,
+    mass: 0.24,
+  });
 
   return (
     <div className="fixed left-0 top-0 z-[60] h-px w-full bg-transparent">
-      <div
-        className="h-full bg-gradient-to-r from-cyan-300 via-white to-emerald-300 transition-[width] duration-150"
-        style={{ width: `${progress}%` }}
+      <motion.div
+        className="h-full origin-left bg-gradient-to-r from-cyan-300 via-white to-emerald-300"
+        style={{ scaleX: shouldReduceMotion ? scrollYProgress : smoothProgress }}
       />
     </div>
   );

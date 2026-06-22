@@ -4,57 +4,37 @@ export function useActiveSection(sectionIds: string[]) {
   const [activeSection, setActiveSection] = useState(sectionIds[0] ?? "");
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
     const sections = sectionIds
       .map((id) => document.getElementById(id))
       .filter(Boolean) as HTMLElement[];
 
     if (sections.length === 0) return;
 
-    let animationFrame = 0;
+    const updateFromReadingLine = () => {
+      const readingLine = window.innerHeight * 0.28;
+      const currentSection = sections.find((section) => {
+        const bounds = section.getBoundingClientRect();
+        return bounds.top <= readingLine && bounds.bottom >= readingLine;
+      });
 
-    const updateActiveSection = () => {
-      animationFrame = 0;
-
-      const headerHeight = document.querySelector("header")?.getBoundingClientRect()
-        .height ?? 80;
-      const readingLine =
-        window.scrollY + headerHeight + Math.min(window.innerHeight * 0.28, 240);
-
-      let currentSection = sections[0].id;
-
-      for (const section of sections) {
-        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-
-        if (readingLine >= sectionTop) {
-          currentSection = section.id;
-        }
-      }
-
-      setActiveSection((previousSection) =>
-        previousSection === currentSection ? previousSection : currentSection,
-      );
-    };
-
-    const scheduleUpdate = () => {
-      if (animationFrame === 0) {
-        animationFrame = window.requestAnimationFrame(updateActiveSection);
+      if (currentSection) {
+        setActiveSection((previousSection) =>
+          previousSection === currentSection.id
+            ? previousSection
+            : currentSection.id,
+        );
       }
     };
 
-    updateActiveSection();
-    window.addEventListener("scroll", scheduleUpdate, { passive: true });
-    window.addEventListener("resize", scheduleUpdate);
+    const observer = new IntersectionObserver(updateFromReadingLine, {
+      rootMargin: "-27% 0px -71% 0px",
+      threshold: 0,
+    });
 
-    return () => {
-      window.removeEventListener("scroll", scheduleUpdate);
-      window.removeEventListener("resize", scheduleUpdate);
+    sections.forEach((section) => observer.observe(section));
+    updateFromReadingLine();
 
-      if (animationFrame !== 0) {
-        window.cancelAnimationFrame(animationFrame);
-      }
-    };
+    return () => observer.disconnect();
   }, [sectionIds]);
 
   return activeSection;

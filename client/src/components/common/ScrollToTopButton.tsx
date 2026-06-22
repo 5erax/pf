@@ -1,24 +1,11 @@
-import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
 
+import { useElementVisibility } from "@/hooks/useElementVisibility";
 import { scrollToSection } from "@/lib/scroll";
 
 export function ScrollToTopButton() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const updateVisibility = () => {
-      setVisible(window.scrollY > 700);
-    };
-
-    updateVisibility();
-
-    window.addEventListener("scroll", updateVisibility, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", updateVisibility);
-    };
-  }, []);
+  const isHomeVisible = useElementVisibility("home");
+  const visible = !isHomeVisible;
 
   return (
     <button

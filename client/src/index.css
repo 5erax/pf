@@ -181,7 +181,7 @@
   }
 
   section[id] {
-    scroll-margin-top: 6rem;
+    scroll-margin-top: 1rem;
   }
 
   a {
@@ -239,7 +239,7 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 96px;
+    scroll-padding-top: 1rem;
   }
 
 @media (prefers-reduced-motion: reduce) {
