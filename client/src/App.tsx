@@ -10,22 +10,22 @@ import { SkillsSection } from "@/components/sections/SkillsSection";
 function App() {
   return (
     <MainLayout>
-      <Reveal>
+      <Reveal index={0} label="Home">
         <HeroSection />
       </Reveal>
-      <Reveal>
+      <Reveal index={1} label="About">
         <AboutSection />
       </Reveal>
-      <Reveal>
+      <Reveal index={2} label="Skills">
         <SkillsSection />
       </Reveal>
-      <Reveal>
+      <Reveal index={3} label="Showcase">
         <InteractiveImageAccordionSection />
       </Reveal>
-      <Reveal>
+      <Reveal index={4} label="Projects">
         <ProjectsSection />
       </Reveal>
-      <Reveal>
+      <Reveal index={5} label="Contact">
         <ContactSection />
       </Reveal>
     </MainLayout>

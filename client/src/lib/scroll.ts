@@ -2,6 +2,18 @@ export function getSectionIdFromHash(hash: string) {
   return hash.replace("#", "");
 }
 
+function getLayoutTop(element: HTMLElement) {
+  let top = 0;
+  let currentElement: HTMLElement | null = element;
+
+  while (currentElement) {
+    top += currentElement.offsetTop;
+    currentElement = currentElement.offsetParent as HTMLElement | null;
+  }
+
+  return top;
+}
+
 export function scrollToSection(hash: string) {
   if (typeof window === "undefined") return;
 
@@ -27,8 +39,8 @@ export function scrollToSection(hash: string) {
 
   window.history.pushState(null, "", hash);
 
-  element.scrollIntoView({
+  window.scrollTo({
+    top: Math.max(getLayoutTop(element) - 16, 0),
     behavior: prefersReducedMotion ? "auto" : "smooth",
-    block: "start",
   });
 }
