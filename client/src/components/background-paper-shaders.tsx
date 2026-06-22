@@ -9,9 +9,9 @@ export default function BackgroundPaperShaders() {
       className="pointer-events-none fixed inset-0 h-screen w-screen overflow-hidden bg-black"
     >
       <MeshGradient
-        className="absolute inset-0 size-full opacity-30"
+        className="absolute inset-0 size-full opacity-70"
         colors={["#000000", "#1a1a1a", "#333333", "#ffffff"]}
-        speed={0.65}
+        speed={1}
       />
 
       <div className="absolute inset-0 bg-black/45" />
