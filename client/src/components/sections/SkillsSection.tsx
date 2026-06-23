@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 import { Container } from "@/components/common/Container";
+import { MotionChip, MotionGroup, MotionItem } from "@/components/common/Reveal";
 import { SpotlightCard } from "@/components/common/SpotlightCard";
 import { skillGroups } from "@/data/skills";
 
@@ -152,45 +153,53 @@ export function SkillsSection() {
   return (
     <section id="skills" className="relative border-t border-white/10 py-24">
       <Container>
-        <div className="mb-12 grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-end">
+        <MotionGroup className="mb-12 grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-end">
           <div className="max-w-3xl">
+            <MotionItem kind="eyebrow">
             <p className="text-sm font-semibold uppercase tracking-[0.25em] text-zinc-500">
               Skills
             </p>
+            </MotionItem>
 
+            <MotionItem kind="heading">
             <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">
               A focused fullstack toolkit for building modern web products.
             </h2>
+            </MotionItem>
 
+            <MotionItem kind="paragraph">
             <p className="mt-5 max-w-2xl leading-8 text-zinc-400">
               I work with a practical stack that helps me build clean
               interfaces, connect real backend services, and keep projects easy
               to maintain as they grow.
             </p>
+            </MotionItem>
           </div>
 
+          <MotionItem kind="card" direction="right">
           <SpotlightCard
             className="p-5"
             spotlightColor="rgba(34, 211, 238, 0.14)"
           >
-            <div className="grid gap-4 sm:grid-cols-2">
+            <MotionGroup compact className="grid gap-4 sm:grid-cols-2">
               {coreStrengths.map((item) => (
-                <div key={item} className="flex items-center gap-3">
+                <MotionItem key={item} kind="chip" className="flex items-center gap-3">
                   <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" />
                   <span className="text-sm text-zinc-300">{item}</span>
-                </div>
+                </MotionItem>
               ))}
-            </div>
+            </MotionGroup>
           </SpotlightCard>
-        </div>
+          </MotionItem>
+        </MotionGroup>
 
-        <div className="mb-6 grid gap-5 md:grid-cols-3">
+        <MotionGroup className="mb-6 grid gap-5 md:grid-cols-3">
           {skillSummary.map((item) => {
             const Icon = item.icon;
 
             return (
+              <MotionItem key={item.title} kind="card">
               <SpotlightCard
-                key={item.title}
                 className="p-6"
                 spotlightColor="rgba(255, 255, 255, 0.12)"
               >
@@ -206,18 +215,23 @@ export function SkillsSection() {
                   {item.description}
                 </p>
               </SpotlightCard>
+              </MotionItem>
             );
           })}
-        </div>
+        </MotionGroup>
 
-        <div className="grid gap-5 md:grid-cols-2">
+        <MotionGroup className="grid gap-5 md:grid-cols-2">
           {skillGroups.map((group, index) => {
             const meta = getSkillMeta(group.title, index);
             const Icon = meta.icon;
 
             return (
-              <SpotlightCard
+              <MotionItem
                 key={group.title}
+                kind="card"
+                direction={index % 2 === 0 ? "left" : "right"}
+              >
+              <SpotlightCard
                 className="p-6"
                 spotlightColor={meta.spotlightColor}
               >
@@ -247,20 +261,21 @@ export function SkillsSection() {
                   {meta.description}
                 </p>
 
-                <div className="mt-6 flex flex-wrap gap-2">
+                <MotionGroup compact className="mt-6 flex flex-wrap gap-2">
                   {group.skills.map((skill) => (
-                    <span
+                    <MotionChip
                       key={skill}
                       className="rounded-full border border-white/10 bg-black/25 px-3.5 py-1.5 text-sm text-zinc-300 transition hover:border-white/20 hover:bg-white/[0.07] hover:text-white"
                     >
                       {skill}
-                    </span>
+                    </MotionChip>
                   ))}
-                </div>
+                </MotionGroup>
               </SpotlightCard>
+              </MotionItem>
             );
           })}
-        </div>
+        </MotionGroup>
       </Container>
     </section>
   );

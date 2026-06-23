@@ -13,6 +13,7 @@ import {
 import { FaGithub } from "react-icons/fa";
 
 import { Container } from "@/components/common/Container";
+import { MotionChip, MotionGroup, MotionItem } from "@/components/common/Reveal";
 import { SpotlightCard } from "@/components/common/SpotlightCard";
 import { Button } from "@/components/ui/button";
 import { projects } from "@/data/projects";
@@ -140,61 +141,74 @@ export function ProjectsSection() {
   return (
     <section id="projects" className="relative border-t border-white/10 py-24">
       <Container>
-        <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <MotionGroup className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">
+            <MotionItem kind="eyebrow">
             <p className="text-sm font-semibold uppercase tracking-[0.25em] text-zinc-500">
               Projects
             </p>
+            </MotionItem>
 
+            <MotionItem kind="heading">
             <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">
               Selected work focused on product UI, fullstack logic, and clean
               implementation.
             </h2>
+            </MotionItem>
 
+            <MotionItem kind="paragraph">
             <p className="mt-5 max-w-2xl leading-8 text-zinc-400">
               These projects show how I structure interfaces, connect frontend
               workflows with APIs, design reusable components, and turn product
               ideas into maintainable web applications.
             </p>
+            </MotionItem>
           </div>
 
+          <MotionItem kind="card" direction="right">
           <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-xl">
             <p className="text-sm text-zinc-500">Project focus</p>
 
-            <div className="mt-3 flex flex-wrap gap-2">
+            <MotionGroup compact className="mt-3 flex flex-wrap gap-2">
               {["React", "TypeScript", "API", "UI System"].map((item) => (
-                <span
+                <MotionChip
                   key={item}
                   className="rounded-full border border-white/10 bg-black/25 px-3 py-1 text-xs font-medium text-zinc-300"
                 >
                   {item}
-                </span>
+                </MotionChip>
               ))}
-            </div>
+            </MotionGroup>
           </div>
-        </div>
+          </MotionItem>
+        </MotionGroup>
 
-        <div className="grid gap-6">
+        <MotionGroup className="grid gap-6">
           {projects.map((project, index) => {
             const visual = getProjectVisual(index);
 
             return (
+              <MotionItem key={project.title} kind="card">
               <SpotlightCard
-                key={project.title}
                 className="group overflow-hidden p-0"
                 spotlightColor={visual.spotlightColor}
               >
                 <article className="grid gap-0 lg:grid-cols-[0.92fr_1.08fr]">
-                  <div className="border-b border-white/10 p-4 lg:border-b-0 lg:border-r">
+                  <MotionItem
+                    kind="card"
+                    direction={index % 2 === 0 ? "left" : "right"}
+                    className="border-b border-white/10 p-4 lg:border-b-0 lg:border-r"
+                  >
                     <ProjectMockup
                       index={index}
                       title={project.title}
                       visual={visual}
                     />
-                  </div>
+                  </MotionItem>
 
-                  <div className="flex flex-col justify-between p-6 sm:p-8">
+                  <MotionGroup compact className="flex flex-col justify-between p-6 sm:p-8">
                     <div>
+                      <MotionItem kind="eyebrow">
                       <div className="mb-6 flex flex-wrap items-center gap-3">
                         <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium uppercase tracking-[0.18em] text-zinc-500">
                           <Layers3 className="h-3.5 w-3.5" />
@@ -206,22 +220,28 @@ export function ProjectsSection() {
                           Practical build
                         </span>
                       </div>
+                      </MotionItem>
 
+                      <MotionItem kind="heading">
                       <h3 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
                         {project.title}
                       </h3>
+                      </MotionItem>
 
+                      <MotionItem kind="paragraph">
                       <p className="mt-5 max-w-3xl text-base leading-8 text-zinc-400 sm:text-lg">
                         {project.description}
                       </p>
+                      </MotionItem>
 
-                      <div className="mt-7 grid gap-3 sm:grid-cols-3">
+                      <MotionGroup compact className="mt-7 grid gap-3 sm:grid-cols-3">
                         {caseStudyMeta.map((item) => {
                           const Icon = item.icon;
 
                           return (
-                            <div
+                            <MotionItem
                               key={item.key}
+                              kind="card"
                               className="rounded-2xl border border-white/10 bg-black/25 p-4"
                             >
                               <Icon className="size-5 text-zinc-400" />
@@ -231,27 +251,28 @@ export function ProjectsSection() {
                               <p className="mt-2 text-sm leading-6 text-zinc-400">
                                 {project.caseStudy[item.key]}
                               </p>
-                            </div>
+                            </MotionItem>
                           );
                         })}
-                      </div>
+                      </MotionGroup>
 
-                      <div className="mt-7 flex flex-wrap gap-2">
+                      <MotionGroup compact className="mt-7 flex flex-wrap gap-2">
                         {project.techStack.map((tech) => (
-                          <span
+                          <MotionChip
                             key={tech}
                             className="rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-sm text-zinc-300"
                           >
                             {tech}
-                          </span>
+                          </MotionChip>
                         ))}
-                      </div>
+                      </MotionGroup>
                     </div>
 
+                    <MotionItem kind="cta">
                     <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                       <Button
                         asChild
-                        className="rounded-full bg-white px-5 text-black hover:bg-zinc-200"
+                        className="rounded-full bg-white px-5 text-black transition-transform hover:-translate-y-0.5 hover:bg-zinc-200"
                       >
                         <a
                           href={project.liveUrl}
@@ -266,7 +287,7 @@ export function ProjectsSection() {
                       <Button
                         asChild
                         variant="outline"
-                        className="rounded-full border-white/10 bg-white/[0.05] px-5 text-white hover:bg-white/[0.1]"
+                        className="rounded-full border-white/10 bg-white/[0.05] px-5 text-white transition-transform hover:-translate-y-0.5 hover:bg-white/[0.1]"
                       >
                         <a
                           href={project.githubUrl}
@@ -278,12 +299,14 @@ export function ProjectsSection() {
                         </a>
                       </Button>
                     </div>
-                  </div>
+                    </MotionItem>
+                  </MotionGroup>
                 </article>
               </SpotlightCard>
+              </MotionItem>
             );
           })}
-        </div>
+        </MotionGroup>
       </Container>
     </section>
   );

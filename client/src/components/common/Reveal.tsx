@@ -7,14 +7,136 @@ import {
   useSpring,
   useTransform,
 } from "motion/react";
+import type { Variants } from "motion/react";
 
 import { cn } from "@/lib/utils";
+
+const interfaceEase = [0.22, 1, 0.36, 1] as const;
+const viewport = { once: false, amount: 0.28, margin: "0px 0px -12% 0px" };
+const itemViewport = { once: false, amount: 0.08, margin: "0px 0px -6% 0px" };
+
+const groupVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      delayChildren: 0.04,
+      staggerChildren: 0.07,
+    },
+  },
+};
+
+const compactGroupVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      delayChildren: 0.03,
+      staggerChildren: 0.035,
+    },
+  },
+};
+
+const revealVariants = {
+  eyebrow: {
+    hidden: {
+      opacity: 0.25,
+      y: 12,
+      letterSpacing: "0.34em",
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      letterSpacing: "0.25em",
+      transition: { duration: 0.46, ease: interfaceEase },
+    },
+  },
+  heading: {
+    hidden: {
+      opacity: 0.18,
+      y: 28,
+      scale: 0.985,
+      clipPath: "inset(18% 0% 0% 0% round 0.75rem)",
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      clipPath: "inset(0% 0% 0% 0% round 0rem)",
+      transition: { duration: 0.62, ease: interfaceEase },
+    },
+  },
+  paragraph: {
+    hidden: {
+      opacity: 0.2,
+      y: 20,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.56, ease: interfaceEase },
+    },
+  },
+  card: {
+    hidden: {
+      opacity: 0.16,
+      y: 36,
+      scale: 0.97,
+      rotateX: 3,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      rotateX: 0,
+      transition: { duration: 0.55, ease: interfaceEase },
+    },
+  },
+  chip: {
+    hidden: {
+      opacity: 0.25,
+      y: 10,
+      scale: 0.92,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.32, ease: interfaceEase },
+    },
+  },
+  cta: {
+    hidden: {
+      opacity: 0.2,
+      y: 18,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.48, ease: interfaceEase },
+    },
+  },
+} satisfies Record<string, Variants>;
+
+type RevealKind = keyof typeof revealVariants;
 
 type RevealProps = {
   children: ReactNode;
   className?: string;
   index: number;
   label: string;
+};
+
+type MotionGroupProps = {
+  children: ReactNode;
+  className?: string;
+  compact?: boolean;
+  amount?: number;
+};
+
+type MotionItemProps = {
+  children: ReactNode;
+  className?: string;
+  kind?: RevealKind;
+  direction?: "left" | "right" | "none";
 };
 
 export function Reveal({ children, className, index, label }: RevealProps) {
@@ -116,5 +238,78 @@ export function Reveal({ children, className, index, label }: RevealProps) {
       ) : null}
       {children}
     </motion.div>
+  );
+}
+
+export function MotionGroup({
+  children,
+  className,
+  compact = false,
+  amount = 0.28,
+}: MotionGroupProps) {
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ ...viewport, amount }}
+      variants={compact ? compactGroupVariants : groupVariants}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export function MotionItem({
+  children,
+  className,
+  kind = "paragraph",
+  direction = "none",
+}: MotionItemProps) {
+  const variants: Variants =
+    direction === "none"
+      ? revealVariants[kind]
+      : {
+          hidden: {
+            ...revealVariants[kind].hidden,
+            x: direction === "left" ? -22 : 22,
+          },
+          visible: {
+            ...revealVariants[kind].visible,
+            x: 0,
+          },
+        };
+
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={itemViewport}
+      variants={variants}
+      className={cn("transform-gpu will-change-[transform,opacity]", className)}
+      style={{ transformPerspective: 900 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export function MotionChip({
+  children,
+  className,
+}: Pick<MotionItemProps, "children" | "className">) {
+  return (
+    <motion.span
+      initial="hidden"
+      whileInView="visible"
+      viewport={itemViewport}
+      variants={{
+        hidden: revealVariants.chip.hidden,
+        visible: revealVariants.chip.visible,
+      }}
+      className={cn("inline-flex transform-gpu will-change-[transform,opacity]", className)}
+    >
+      {children}
+    </motion.span>
   );
 }

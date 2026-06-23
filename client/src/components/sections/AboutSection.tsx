@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 
 import { Container } from "@/components/common/Container";
+import { MotionGroup, MotionItem } from "@/components/common/Reveal";
 import { SpotlightCard } from "@/components/common/SpotlightCard";
 import { profile } from "@/data/profile";
 
@@ -120,18 +121,23 @@ export function AboutSection() {
     <section id="about" className="relative border-t border-white/10 py-24">
       <Container>
         <div className="mx-auto max-w-6xl">
-          <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-end">
+          <MotionGroup className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-end">
             <div>
+              <MotionItem kind="eyebrow">
               <p className="text-sm font-semibold uppercase tracking-[0.25em] text-zinc-500">
                 About
               </p>
+              </MotionItem>
 
+              <MotionItem kind="heading">
               <h2 className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">
                 I turn ideas into clean, scalable, and production-ready web
                 experiences.
               </h2>
+              </MotionItem>
             </div>
 
+            <MotionItem kind="paragraph" direction="right">
             <p className="max-w-2xl text-base leading-8 text-zinc-400 sm:text-lg">
               I am {profile.name}, also known as @{profile.alias}. I focus on
               building modern fullstack applications with React, TypeScript,
@@ -139,9 +145,11 @@ export function AboutSection() {
               code, practical architecture, and user flows that feel simple and
               reliable.
             </p>
-          </div>
+            </MotionItem>
+          </MotionGroup>
 
-          <div className="mt-12 grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
+          <MotionGroup className="mt-12 grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
+            <MotionItem kind="card" direction="left">
             <SpotlightCard
               className="p-6 sm:p-8"
               spotlightColor="rgba(34, 211, 238, 0.14)"
@@ -179,8 +187,10 @@ export function AboutSection() {
                 <CodePreviewCard />
               </div>
             </SpotlightCard>
+            </MotionItem>
 
-            <div className="grid gap-5">
+            <MotionGroup compact className="grid gap-5">
+              <MotionItem kind="card" direction="right">
               <SpotlightCard
                 className="p-5"
                 spotlightColor="rgba(16, 185, 129, 0.14)"
@@ -199,7 +209,9 @@ export function AboutSection() {
                   ))}
                 </div>
               </SpotlightCard>
+              </MotionItem>
 
+              <MotionItem kind="card" direction="right">
               <SpotlightCard
                 className="p-5"
                 spotlightColor="rgba(168, 85, 247, 0.14)"
@@ -224,16 +236,17 @@ export function AboutSection() {
                   </div>
                 </div>
               </SpotlightCard>
-            </div>
-          </div>
+              </MotionItem>
+            </MotionGroup>
+          </MotionGroup>
 
-          <div className="mt-5 grid gap-5 md:grid-cols-3">
+          <MotionGroup className="mt-5 grid gap-5 md:grid-cols-3">
             {values.map((item) => {
               const Icon = item.icon;
 
               return (
+                <MotionItem key={item.title} kind="card">
                 <SpotlightCard
-                  key={item.title}
                   className="p-6"
                   spotlightColor="rgba(255, 255, 255, 0.12)"
                 >
@@ -249,9 +262,10 @@ export function AboutSection() {
                     {item.description}
                   </p>
                 </SpotlightCard>
+                </MotionItem>
               );
             })}
-          </div>
+          </MotionGroup>
         </div>
       </Container>
     </section>
