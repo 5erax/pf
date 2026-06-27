@@ -13,7 +13,7 @@ export const projects = [
     },
     techStack: ["TypeScript", "React", "Node.js", "Socket.io"],
     githubUrl: "https://github.com/5erax/geoconnect",
-    liveUrl: "#",
+    liveUrl: null,
   },
   {
     title: "CVmate",
@@ -29,7 +29,7 @@ export const projects = [
     },
     techStack: ["JavaScript", "React", "AI/LLM", "PDF Export"],
     githubUrl: "https://github.com/5erax/CVmate",
-    liveUrl: "#",
+    liveUrl: null,
   },
   {
     title: "Ecomerce Mobile",
@@ -45,7 +45,7 @@ export const projects = [
     },
     techStack: ["React Native", "Node.js", "MongoDB"],
     githubUrl: "https://github.com/5erax/ecomerce-mobile",
-    liveUrl: "#",
+    liveUrl: null,
   },
   {
     title: "Flowery",
@@ -61,7 +61,7 @@ export const projects = [
     },
     techStack: ["HTML", "CSS", "JavaScript"],
     githubUrl: "https://github.com/5erax/Flowery",
-    liveUrl: "#",
+    liveUrl: null,
   },
   {
     title: "MLN Web",
@@ -77,6 +77,6 @@ export const projects = [
     },
     techStack: ["TypeScript", "React", "Vite"],
     githubUrl: "https://github.com/5erax/MLN-web",
-    liveUrl: "#",
+    liveUrl: null,
   },
 ];
