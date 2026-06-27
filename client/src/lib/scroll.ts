@@ -22,7 +22,7 @@ export function scrollToSection(hash: string) {
   ).matches;
 
   if (hash === "#" || hash === "#home") {
-    window.history.pushState(null, "", "#home");
+    window.history.replaceState(null, "", "#home");
 
     window.scrollTo({
       top: 0,
@@ -37,7 +37,7 @@ export function scrollToSection(hash: string) {
 
   if (!element) return;
 
-  window.history.pushState(null, "", hash);
+  window.history.replaceState(null, "", hash);
 
   window.scrollTo({
     top: Math.max(getLayoutTop(element) - 16, 0),
