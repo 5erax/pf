@@ -1,3 +1,5 @@
+import { site } from "@/data/site";
+
 export const profile = {
   name: "Lagna",
   alias: "5erax",
@@ -7,7 +9,7 @@ export const profile = {
   email: "phuocha275@gmail.com",
   github: "https://github.com/5erax",
   linkedin: "https://linkedin.com/in/phuocha275",
-  portfolio: "https://dha2608.vercel.app",
+  portfolio: site.url,
   status: "Open to Work",
   headline:
     "Fullstack Developer building clean, polished, and maintainable web applications.",
