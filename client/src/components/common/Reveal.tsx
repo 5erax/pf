@@ -11,8 +11,8 @@ const groupVariants: Variants = {
   hidden: {},
   visible: {
     transition: {
-      delayChildren: 0.02,
-      staggerChildren: 0.055,
+      delayChildren: 0.04,
+      staggerChildren: 0.075,
     },
   },
 };
@@ -21,8 +21,8 @@ const compactGroupVariants: Variants = {
   hidden: {},
   visible: {
     transition: {
-      delayChildren: 0.015,
-      staggerChildren: 0.025,
+      delayChildren: 0.025,
+      staggerChildren: 0.045,
     },
   },
 };
@@ -30,74 +30,78 @@ const compactGroupVariants: Variants = {
 const revealVariants = {
   eyebrow: {
     hidden: {
-      opacity: 0.35,
-      y: 10,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.38, ease: interfaceEase },
-    },
-  },
-  heading: {
-    hidden: {
-      opacity: 0.25,
-      y: 24,
-      scale: 0.99,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.5, ease: interfaceEase },
-    },
-  },
-  paragraph: {
-    hidden: {
-      opacity: 0.28,
-      y: 18,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.46, ease: interfaceEase },
-    },
-  },
-  card: {
-    hidden: {
-      opacity: 0.24,
-      y: 28,
+      opacity: 0.18,
+      y: 12,
       scale: 0.985,
     },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { duration: 0.46, ease: interfaceEase },
+      transition: { duration: 0.42, ease: interfaceEase },
     },
   },
-  chip: {
+  heading: {
     hidden: {
-      opacity: 0.35,
-      y: 8,
-      scale: 0.96,
+      opacity: 0.12,
+      y: 24,
+      scale: 0.985,
     },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { duration: 0.26, ease: interfaceEase },
+      transition: { duration: 0.58, ease: interfaceEase },
     },
   },
-  cta: {
+  paragraph: {
     hidden: {
-      opacity: 0.3,
-      y: 14,
+      opacity: 0.16,
+      y: 22,
     },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.38, ease: interfaceEase },
+      transition: { duration: 0.52, ease: interfaceEase },
+    },
+  },
+  card: {
+    hidden: {
+      opacity: 0.14,
+      y: 34,
+      scale: 0.975,
+      rotateX: 2.5,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      rotateX: 0,
+      transition: { duration: 0.62, ease: interfaceEase },
+    },
+  },
+  chip: {
+    hidden: {
+      opacity: 0.16,
+      y: 10,
+      scale: 0.92,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.34, ease: interfaceEase },
+    },
+  },
+  cta: {
+    hidden: {
+      opacity: 0.16,
+      y: 18,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.46, ease: interfaceEase },
     },
   },
 } satisfies Record<string, Variants>;
@@ -130,19 +134,17 @@ export function Reveal({ children, className, index, label }: RevealProps) {
 
   return (
     <motion.div
-      initial={shouldReduceMotion ? false : "hidden"}
+      initial={false}
       whileInView="visible"
       viewport={{ ...viewport, amount: 0.12 }}
       variants={{
-        hidden: { opacity: 0.86, y: 18, scale: 0.995 },
+        hidden: { opacity: 0.92 },
         visible: {
           opacity: 1,
-          y: 0,
-          scale: 1,
           transition: { duration: 0.44, ease: interfaceEase },
         },
       }}
-      className={cn("relative transform-gpu", className)}
+      className={cn("section-reveal-shell relative", className)}
     >
       {!shouldReduceMotion ? (
         <>
@@ -195,7 +197,7 @@ export function MotionGroup({
       whileInView="visible"
       viewport={{ ...viewport, amount }}
       variants={compact ? compactGroupVariants : groupVariants}
-      className={className}
+      className={cn("motion-reveal-group", className)}
     >
       {children}
     </motion.div>
@@ -225,7 +227,11 @@ export function MotionItem({
   return (
     <motion.div
       variants={variants}
-      className={cn("transform-gpu", className)}
+      className={cn(
+        "motion-reveal-item transform-gpu",
+        kind === "card" && "motion-reveal-card",
+        className,
+      )}
     >
       {children}
     </motion.div>
@@ -239,7 +245,7 @@ export function MotionChip({
   return (
     <motion.span
       variants={revealVariants.chip}
-      className={cn("inline-flex transform-gpu", className)}
+      className={cn("motion-reveal-item inline-flex transform-gpu", className)}
     >
       {children}
     </motion.span>
