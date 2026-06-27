@@ -72,8 +72,10 @@ const AccordionItem = memo(function AccordionItem({
       aria-pressed={isActive}
       aria-label={`Show ${item.title}`}
       className={cn(
-        "relative w-full min-w-0 cursor-pointer overflow-hidden rounded-2xl border border-white/15 bg-black/40 text-left transition-[height,flex-grow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white md:h-[420px]",
-        isActive ? "h-72 md:flex-[5]" : "h-16 md:flex-[0.72]",
+        "group relative h-64 w-full min-w-0 flex-1 cursor-pointer overflow-hidden rounded-2xl border bg-black/40 text-left transition-[border-color,box-shadow,opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:h-72 md:h-[420px]",
+        isActive
+          ? "border-cyan-200/40 opacity-100 shadow-[0_24px_80px_rgba(34,211,238,0.14)]"
+          : "border-white/12 opacity-70 hover:border-white/25 hover:opacity-95",
       )}
       onClick={() => onActivate(index)}
       onFocus={() => onActivate(index)}
@@ -87,19 +89,34 @@ const AccordionItem = memo(function AccordionItem({
         loading={index === 0 ? "eager" : "lazy"}
         decoding="async"
         fetchPriority={index === 0 ? "high" : "low"}
-        className="absolute inset-0 size-full object-cover"
+        className={cn(
+          "absolute inset-0 size-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          isActive ? "scale-100" : "scale-[1.035]",
+        )}
         onError={handleImageError}
       />
 
-      <div className="absolute inset-0 bg-black/45" />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,_transparent_0%,_rgba(0,0,0,0.72)_100%)]" />
+      <div
+        className={cn(
+          "absolute inset-0 transition-colors duration-300",
+          isActive ? "bg-black/34" : "bg-black/58",
+        )}
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,_rgba(0,0,0,0.08)_0%,_rgba(0,0,0,0.76)_100%)]" />
+      <div
+        aria-hidden="true"
+        className={cn(
+          "absolute inset-x-5 top-5 h-px origin-left bg-gradient-to-r from-cyan-200 via-white/60 to-transparent transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          isActive ? "scale-x-100 opacity-80" : "scale-x-0 opacity-0",
+        )}
+      />
 
       <span
         className={cn(
-          "absolute whitespace-nowrap text-lg font-semibold text-white transition-all duration-300 ease-out",
+          "absolute bottom-6 left-5 right-5 text-lg font-semibold text-white transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] md:text-center",
           isActive
-            ? "bottom-6 left-1/2 -translate-x-1/2 rotate-0"
-            : "bottom-1/2 left-5 translate-y-1/2 rotate-0 md:bottom-24 md:left-1/2 md:-translate-x-1/2 md:translate-y-0 md:rotate-90",
+            ? "translate-y-0 opacity-100"
+            : "translate-y-2 opacity-70 group-hover:translate-y-0 group-hover:opacity-95",
         )}
       >
         {item.title}

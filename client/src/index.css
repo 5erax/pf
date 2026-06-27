@@ -256,7 +256,7 @@
     z-index: 1;
     height: 1px;
     pointer-events: none;
-    transform: scaleX(0.42);
+    transform: scaleX(0.72);
     transform-origin: center;
     background: linear-gradient(
       90deg,
@@ -265,9 +265,8 @@
       rgb(167 243 208 / 0.72),
       transparent
     );
-    opacity: 0.36;
-    box-shadow: 0 0 22px rgb(103 232 249 / 0.28);
-    animation: interface-scan 5.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+    opacity: 0.26;
+    box-shadow: 0 0 16px rgb(103 232 249 / 0.2);
   }
 
   .motion-reveal-group {
@@ -282,28 +281,6 @@
     transform-origin: 50% 62%;
     perspective: 1200px;
     will-change: transform, opacity;
-  }
-
-  @keyframes interface-scan {
-    0%,
-    58% {
-      opacity: 0;
-      transform: scaleX(0.18) translate3d(-7%, 0, 0);
-    }
-
-    66% {
-      opacity: 0.62;
-    }
-
-    82% {
-      opacity: 0.26;
-      transform: scaleX(1) translate3d(7%, 0, 0);
-    }
-
-    100% {
-      opacity: 0;
-      transform: scaleX(0.2) translate3d(10%, 0, 0);
-    }
   }
 
   html {
@@ -329,12 +306,6 @@
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-  }
-
-  .section-reveal-shell::before {
-    animation: none;
-    opacity: 0.18;
-    transform: none;
   }
 
   .motion-reveal-item {

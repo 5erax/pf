@@ -5,14 +5,14 @@ import type { Variants } from "motion/react";
 import { cn } from "@/lib/utils";
 
 const interfaceEase = [0.22, 1, 0.36, 1] as const;
-const viewport = { once: false, amount: 0.22, margin: "0px 0px -10% 0px" };
+const viewport = { once: false, amount: 0.28, margin: "0px 0px -12% 0px" };
 
 const groupVariants: Variants = {
   hidden: {},
   visible: {
     transition: {
-      delayChildren: 0.04,
-      staggerChildren: 0.075,
+      delayChildren: 0.03,
+      staggerChildren: 0.055,
     },
   },
 };
@@ -21,8 +21,8 @@ const compactGroupVariants: Variants = {
   hidden: {},
   visible: {
     transition: {
-      delayChildren: 0.025,
-      staggerChildren: 0.045,
+      delayChildren: 0.02,
+      staggerChildren: 0.035,
     },
   },
 };
@@ -30,78 +30,72 @@ const compactGroupVariants: Variants = {
 const revealVariants = {
   eyebrow: {
     hidden: {
-      opacity: 0.18,
-      y: 12,
-      scale: 0.985,
+      opacity: 0,
+      y: 8,
     },
     visible: {
       opacity: 1,
       y: 0,
-      scale: 1,
-      transition: { duration: 0.42, ease: interfaceEase },
+      transition: { duration: 0.36, ease: interfaceEase },
     },
   },
   heading: {
     hidden: {
-      opacity: 0.12,
-      y: 24,
-      scale: 0.985,
+      opacity: 0,
+      y: 12,
     },
     visible: {
       opacity: 1,
       y: 0,
-      scale: 1,
-      transition: { duration: 0.58, ease: interfaceEase },
+      transition: { duration: 0.5, ease: interfaceEase },
     },
   },
   paragraph: {
     hidden: {
-      opacity: 0.16,
-      y: 22,
+      opacity: 0,
+      y: 10,
     },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.52, ease: interfaceEase },
+      transition: { duration: 0.44, ease: interfaceEase },
     },
   },
   card: {
     hidden: {
-      opacity: 0.14,
-      y: 34,
-      scale: 0.975,
-      rotateX: 2.5,
+      opacity: 0,
+      y: 14,
+      scale: 0.992,
     },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
-      rotateX: 0,
-      transition: { duration: 0.62, ease: interfaceEase },
+      transition: { duration: 0.5, ease: interfaceEase },
     },
   },
   chip: {
     hidden: {
-      opacity: 0.16,
-      y: 10,
-      scale: 0.92,
+      opacity: 0,
+      y: 6,
+      scale: 0.98,
     },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { duration: 0.34, ease: interfaceEase },
+      transition: { duration: 0.28, ease: interfaceEase },
     },
   },
   cta: {
     hidden: {
-      opacity: 0.16,
-      y: 18,
+      opacity: 0,
+      y: 10,
     },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.46, ease: interfaceEase },
+      transition: { duration: 0.38, ease: interfaceEase },
     },
   },
 } satisfies Record<string, Variants>;
@@ -159,12 +153,10 @@ export function Reveal({ children, className, index, label }: RevealProps) {
           <motion.div
             aria-hidden="true"
             variants={{
-              hidden: { opacity: 0, y: 28, scale: 0.96 },
+              hidden: { opacity: 0 },
               visible: {
-                opacity: 0.2,
-                y: 0,
-                scale: 1,
-                transition: { duration: 0.44, ease: interfaceEase },
+                opacity: 0.13,
+                transition: { duration: 0.45, ease: interfaceEase },
               },
             }}
             className="pointer-events-none absolute right-[5%] top-8 z-20 select-none text-right font-mono leading-none text-white sm:top-12"
@@ -208,25 +200,10 @@ export function MotionItem({
   children,
   className,
   kind = "paragraph",
-  direction = "none",
 }: MotionItemProps) {
-  const variants: Variants =
-    direction === "none"
-      ? revealVariants[kind]
-      : {
-          hidden: {
-            ...revealVariants[kind].hidden,
-            x: direction === "left" ? -16 : 16,
-          },
-          visible: {
-            ...revealVariants[kind].visible,
-            x: 0,
-          },
-        };
-
   return (
     <motion.div
-      variants={variants}
+      variants={revealVariants[kind]}
       className={cn(
         "motion-reveal-item transform-gpu",
         kind === "card" && "motion-reveal-card",
