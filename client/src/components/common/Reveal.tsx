@@ -200,10 +200,25 @@ export function MotionItem({
   children,
   className,
   kind = "paragraph",
+  direction = "none",
 }: MotionItemProps) {
+  const variants: Variants =
+    direction === "none"
+      ? revealVariants[kind]
+      : {
+          hidden: {
+            ...revealVariants[kind].hidden,
+            x: direction === "left" ? -8 : 8,
+          },
+          visible: {
+            ...revealVariants[kind].visible,
+            x: 0,
+          },
+        };
+
   return (
     <motion.div
-      variants={revealVariants[kind]}
+      variants={variants}
       className={cn(
         "motion-reveal-item transform-gpu",
         kind === "card" && "motion-reveal-card",
