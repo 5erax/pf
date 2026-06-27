@@ -1,6 +1,7 @@
 "use client";
 
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useId, useState } from "react";
+import type { KeyboardEvent } from "react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -49,14 +50,20 @@ type AccordionItemProps = {
   item: AccordionItemData;
   index: number;
   isActive: boolean;
+  tabId: string;
+  panelId: string;
   onActivate: (index: number) => void;
+  onKeyDown: (event: KeyboardEvent<HTMLButtonElement>, index: number) => void;
 };
 
 const AccordionItem = memo(function AccordionItem({
   item,
   index,
   isActive,
+  tabId,
+  panelId,
   onActivate,
+  onKeyDown,
 }: AccordionItemProps) {
   const handleImageError = (
     event: React.SyntheticEvent<HTMLImageElement, Event>
@@ -69,8 +76,12 @@ const AccordionItem = memo(function AccordionItem({
   return (
     <button
       type="button"
-      aria-pressed={isActive}
+      id={tabId}
+      role="tab"
+      aria-selected={isActive}
+      aria-controls={panelId}
       aria-label={`Show ${item.title}`}
+      tabIndex={isActive ? 0 : -1}
       className={cn(
         "group relative h-64 w-full min-w-0 flex-1 cursor-pointer overflow-hidden rounded-2xl border bg-black/40 text-left transition-[border-color,box-shadow,opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:h-72 md:h-[420px]",
         isActive
@@ -78,8 +89,8 @@ const AccordionItem = memo(function AccordionItem({
           : "border-white/12 opacity-70 hover:border-white/25 hover:opacity-95",
       )}
       onClick={() => onActivate(index)}
-      onFocus={() => onActivate(index)}
       onMouseEnter={() => onActivate(index)}
+      onKeyDown={(event) => onKeyDown(event, index)}
     >
       <img
         src={item.imageUrl}
@@ -133,12 +144,46 @@ export function LandingAccordionItem({
   className = "",
 }: LandingAccordionItemProps) {
   const [activeIndex, setActiveIndex] = useState(4);
+  const tabsId = useId();
 
   const handleItemActivate = useCallback((index: number) => {
     setActiveIndex((currentIndex) =>
       currentIndex === index ? currentIndex : index,
     );
   }, []);
+
+  const focusTab = useCallback(
+    (index: number) => {
+      document
+        .getElementById(`${tabsId}-tab-${accordionItems[index].id}`)
+        ?.focus();
+    },
+    [tabsId],
+  );
+
+  const handleTabKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+      const lastIndex = accordionItems.length - 1;
+      let nextIndex: number;
+
+      if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+        nextIndex = index === lastIndex ? 0 : index + 1;
+      } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+        nextIndex = index === 0 ? lastIndex : index - 1;
+      } else if (event.key === "Home") {
+        nextIndex = 0;
+      } else if (event.key === "End") {
+        nextIndex = lastIndex;
+      } else {
+        return;
+      }
+
+      event.preventDefault();
+      handleItemActivate(nextIndex);
+      focusTab(nextIndex);
+    },
+    [focusTab, handleItemActivate],
+  );
 
   return (
     <div
@@ -179,6 +224,7 @@ export function LandingAccordionItem({
           <div className="w-full min-w-0 lg:w-3/5">
             <div
               aria-label="AI workflow examples"
+              role="tablist"
               className="flex w-full min-w-0 flex-col gap-3 py-4 md:flex-row md:items-stretch md:gap-4"
             >
               {accordionItems.map((item, index) => (
@@ -187,10 +233,26 @@ export function LandingAccordionItem({
                   item={item}
                   index={index}
                   isActive={index === activeIndex}
+                  tabId={`${tabsId}-tab-${item.id}`}
+                  panelId={`${tabsId}-panel-${item.id}`}
                   onActivate={handleItemActivate}
+                  onKeyDown={handleTabKeyDown}
                 />
               ))}
             </div>
+
+            {accordionItems.map((item, index) => (
+              <div
+                key={item.id}
+                id={`${tabsId}-panel-${item.id}`}
+                role="tabpanel"
+                aria-labelledby={`${tabsId}-tab-${item.id}`}
+                hidden={index !== activeIndex}
+                className="sr-only"
+              >
+                {item.title}
+              </div>
+            ))}
           </div>
         </div>
       </section>
