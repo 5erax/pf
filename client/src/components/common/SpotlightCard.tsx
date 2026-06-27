@@ -1,4 +1,5 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties, PointerEvent, ReactNode } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 type SpotlightCardProps = {
   children: ReactNode;
@@ -11,22 +12,48 @@ export function SpotlightCard({
   className = "",
   spotlightColor = "rgba(255, 255, 255, 0.16)",
 }: SpotlightCardProps) {
-  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect();
+  const animationFrameRef = useRef<number | null>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const pointerRef = useRef({ x: "50%", y: "50%" });
 
-    event.currentTarget.style.setProperty(
-      "--spotlight-x",
-      `${event.clientX - rect.left}px`
-    );
+  const flushSpotlightPosition = useCallback(() => {
+    animationFrameRef.current = null;
+    const card = cardRef.current;
 
-    event.currentTarget.style.setProperty(
-      "--spotlight-y",
-      `${event.clientY - rect.top}px`
-    );
-  };
+    if (!card) return;
+
+    card.style.setProperty("--spotlight-x", pointerRef.current.x);
+    card.style.setProperty("--spotlight-y", pointerRef.current.y);
+  }, []);
+
+  const handlePointerMove = useCallback(
+    (event: PointerEvent<HTMLDivElement>) => {
+      if (event.pointerType === "touch") return;
+
+      const rect = event.currentTarget.getBoundingClientRect();
+      pointerRef.current = {
+        x: `${event.clientX - rect.left}px`,
+        y: `${event.clientY - rect.top}px`,
+      };
+
+      if (animationFrameRef.current === null) {
+        animationFrameRef.current = requestAnimationFrame(flushSpotlightPosition);
+      }
+    },
+    [flushSpotlightPosition],
+  );
+
+  useEffect(() => {
+    return () => {
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div
+      ref={cardRef}
       onPointerMove={handlePointerMove}
       style={
         {

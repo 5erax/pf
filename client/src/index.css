@@ -188,6 +188,8 @@
 
   section[id] {
     scroll-margin-top: 1rem;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
   }
 
   a {

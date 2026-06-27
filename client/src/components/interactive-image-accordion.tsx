@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { memo, useCallback, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -47,11 +47,17 @@ const accordionItems: AccordionItemData[] = [
 
 type AccordionItemProps = {
   item: AccordionItemData;
+  index: number;
   isActive: boolean;
-  onActivate: () => void;
+  onActivate: (index: number) => void;
 };
 
-function AccordionItem({ item, isActive, onActivate }: AccordionItemProps) {
+const AccordionItem = memo(function AccordionItem({
+  item,
+  index,
+  isActive,
+  onActivate,
+}: AccordionItemProps) {
   const handleImageError = (
     event: React.SyntheticEvent<HTMLImageElement, Event>
   ) => {
@@ -69,9 +75,9 @@ function AccordionItem({ item, isActive, onActivate }: AccordionItemProps) {
         "relative w-full min-w-0 cursor-pointer overflow-hidden rounded-2xl border border-white/15 bg-black/40 text-left transition-[height,flex-grow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white md:h-[420px]",
         isActive ? "h-72 md:flex-[5]" : "h-16 md:flex-[0.72]",
       )}
-      onClick={onActivate}
-      onFocus={onActivate}
-      onMouseEnter={onActivate}
+      onClick={() => onActivate(index)}
+      onFocus={() => onActivate(index)}
+      onMouseEnter={() => onActivate(index)}
     >
       <img
         src={item.imageUrl}
@@ -95,7 +101,7 @@ function AccordionItem({ item, isActive, onActivate }: AccordionItemProps) {
       </span>
     </button>
   );
-}
+});
 
 type LandingAccordionItemProps = {
   className?: string;
@@ -106,9 +112,11 @@ export function LandingAccordionItem({
 }: LandingAccordionItemProps) {
   const [activeIndex, setActiveIndex] = useState(4);
 
-  const handleItemActivate = (index: number) => {
-    setActiveIndex(index);
-  };
+  const handleItemActivate = useCallback((index: number) => {
+    setActiveIndex((currentIndex) =>
+      currentIndex === index ? currentIndex : index,
+    );
+  }, []);
 
   return (
     <div
@@ -155,8 +163,9 @@ export function LandingAccordionItem({
                 <AccordionItem
                   key={item.id}
                   item={item}
+                  index={index}
                   isActive={index === activeIndex}
-                  onActivate={() => handleItemActivate(index)}
+                  onActivate={handleItemActivate}
                 />
               ))}
             </div>

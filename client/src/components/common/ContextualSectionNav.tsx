@@ -73,9 +73,9 @@ export function ContextualSectionNav() {
                           <AnimatePresence mode="wait" initial={false}>
                             <motion.span
                               key={activeSection}
-                              initial={shouldReduceMotion ? false : { opacity: 0, x: 10, filter: "blur(5px)" }}
-                              animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-                              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: 8, filter: "blur(5px)" }}
+                              initial={shouldReduceMotion ? false : { opacity: 0, x: 10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: 8 }}
                               transition={{ duration: shouldReduceMotion ? 0 : 0.24 }}
                               className="absolute right-full mr-3 flex items-center gap-2 whitespace-nowrap rounded-full border border-white/10 bg-black/65 px-3 py-2 shadow-xl backdrop-blur-xl"
                               aria-hidden="true"
