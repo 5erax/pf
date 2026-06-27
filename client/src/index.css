@@ -188,8 +188,7 @@
 
   section[id] {
     scroll-margin-top: 1rem;
-    content-visibility: auto;
-    contain-intrinsic-size: auto 900px;
+    contain: paint;
   }
 
   a {
@@ -245,9 +244,77 @@
     translate: 0;
   }
 
+  .section-reveal-shell {
+    isolation: isolate;
+  }
+
+  .section-reveal-shell::before {
+    content: "";
+    position: absolute;
+    inset-inline: max(1rem, 7vw);
+    top: 0;
+    z-index: 1;
+    height: 1px;
+    pointer-events: none;
+    transform: scaleX(0.42);
+    transform-origin: center;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(103 232 249 / 0.86),
+      rgb(167 243 208 / 0.72),
+      transparent
+    );
+    opacity: 0.36;
+    box-shadow: 0 0 22px rgb(103 232 249 / 0.28);
+    animation: interface-scan 5.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+
+  .motion-reveal-group {
+    transform-style: preserve-3d;
+  }
+
+  .motion-reveal-item {
+    backface-visibility: hidden;
+  }
+
+  .motion-reveal-card {
+    transform-origin: 50% 62%;
+    perspective: 1200px;
+    will-change: transform, opacity;
+  }
+
+  @keyframes interface-scan {
+    0%,
+    58% {
+      opacity: 0;
+      transform: scaleX(0.18) translate3d(-7%, 0, 0);
+    }
+
+    66% {
+      opacity: 0.62;
+    }
+
+    82% {
+      opacity: 0.26;
+      transform: scaleX(1) translate3d(7%, 0, 0);
+    }
+
+    100% {
+      opacity: 0;
+      transform: scaleX(0.2) translate3d(10%, 0, 0);
+    }
+  }
+
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 1rem;
+  }
+
+  @media (max-width: 767px) {
+    .motion-reveal-item {
+      will-change: auto;
+    }
   }
 
 @media (prefers-reduced-motion: reduce) {
@@ -262,6 +329,16 @@
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  .section-reveal-shell::before {
+    animation: none;
+    opacity: 0.18;
+    transform: none;
+  }
+
+  .motion-reveal-item {
+    will-change: auto;
   }
 }
 
