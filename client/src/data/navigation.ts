@@ -8,6 +8,10 @@ export const navigationItems = [
     href: "#skills",
   },
   {
+    label: "Showcase",
+    href: "#showcase",
+  },
+  {
     label: "Projects",
     href: "#projects",
   },
