@@ -2,6 +2,7 @@ import { Mail } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 import { Container } from "@/components/common/Container";
+import { profile } from "@/data/profile";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -13,12 +14,20 @@ export function Footer() {
           <p>© {currentYear} Lagna. Built with React and TypeScript.</p>
 
           <div className="flex items-center gap-4">
-            <a href="#" aria-label="GitHub" className="transition hover:text-white">
+            <a
+              href={profile.github}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="GitHub"
+              className="transition hover:text-white"
+            >
               <FaGithub className="h-5 w-5" />
             </a>
 
             <a
-              href="#"
+              href={profile.linkedin}
+              target="_blank"
+              rel="noreferrer"
               aria-label="LinkedIn"
               className="transition hover:text-white"
             >
@@ -26,7 +35,7 @@ export function Footer() {
             </a>
 
             <a
-              href="mailto:your-email@example.com"
+              href={`mailto:${profile.email}`}
               aria-label="Email"
               className="transition hover:text-white"
             >
