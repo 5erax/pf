@@ -154,12 +154,25 @@
   html {
     scroll-behavior: smooth;
     background: #000000;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    scrollbar-color: rgba(255, 255, 255, 0.32) rgba(255, 255, 255, 0.06);
+    scrollbar-width: thin;
   }
 
   html::-webkit-scrollbar {
-    display: none;
+    width: 8px;
+  }
+
+  html::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  html::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background: linear-gradient(
+      180deg,
+      rgba(103, 232, 249, 0.55),
+      rgba(16, 185, 129, 0.42)
+    );
   }
 
   body {
