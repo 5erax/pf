@@ -186,6 +186,7 @@ export function ProjectsSection() {
         <MotionGroup className="grid gap-6">
           {projects.map((project, index) => {
             const visual = getProjectVisual(index);
+            const liveUrl = project.liveUrl;
 
             return (
               <MotionItem key={project.title} kind="card">
@@ -270,19 +271,25 @@ export function ProjectsSection() {
 
                     <MotionItem kind="cta">
                     <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                      <Button
-                        asChild
-                        className="rounded-full bg-white px-5 text-black transition-transform hover:-translate-y-0.5 hover:bg-zinc-200"
-                      >
-                        <a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noreferrer"
+                      {liveUrl ? (
+                        <Button
+                          asChild
+                          className="rounded-full bg-white px-5 text-black transition-transform hover:-translate-y-0.5 hover:bg-zinc-200"
                         >
-                          Live demo
-                          <ArrowUpRight className="ml-2 h-4 w-4" />
-                        </a>
-                      </Button>
+                          <a
+                            href={liveUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Live demo
+                            <ArrowUpRight className="ml-2 h-4 w-4" />
+                          </a>
+                        </Button>
+                      ) : (
+                        <span className="inline-flex min-h-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] px-5 text-sm font-medium text-zinc-500">
+                          Demo coming soon
+                        </span>
+                      )}
 
                       <Button
                         asChild
