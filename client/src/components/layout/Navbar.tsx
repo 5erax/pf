@@ -1,4 +1,4 @@
-import { Briefcase, Code2, Home, Mail, User } from "lucide-react";
+import { Briefcase, Code2, Home, Mail, Sparkles, User } from "lucide-react";
 
 import { Container } from "@/components/common/Container";
 import { Button } from "@/components/ui/button";
@@ -26,6 +26,11 @@ const navItems: NavItem[] = [
     icon: Code2,
   },
   {
+    name: "Showcase",
+    url: "#showcase",
+    icon: Sparkles,
+  },
+  {
     name: "Projects",
     url: "#projects",
     icon: Briefcase,
@@ -37,7 +42,7 @@ const navItems: NavItem[] = [
   },
 ];
 
-const sectionIds = ["home", "about", "skills", "projects", "contact"];
+const sectionIds = ["home", "about", "skills", "showcase", "projects", "contact"];
 
 export function Navbar() {
   const activeSection = useActiveSection(sectionIds);
