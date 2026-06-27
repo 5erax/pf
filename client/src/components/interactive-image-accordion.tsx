@@ -82,6 +82,11 @@ const AccordionItem = memo(function AccordionItem({
       <img
         src={item.imageUrl}
         alt=""
+        width={640}
+        height={720}
+        loading={index === 0 ? "eager" : "lazy"}
+        decoding="async"
+        fetchPriority={index === 0 ? "high" : "low"}
         className="absolute inset-0 size-full object-cover"
         onError={handleImageError}
       />
