@@ -18,6 +18,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { profile } from "@/data/profile";
 import { scrollToSection } from "@/lib/scroll";
+import { FloatingElement } from "@/motion/components/FloatingElement";
+import { MagneticButton } from "@/motion/components/MagneticButton";
+import { TextReveal } from "@/motion/components/TextReveal";
+import { TiltCard } from "@/motion/components/TiltCard";
 
 const highlights = [
   "React + TypeScript",
@@ -62,6 +66,10 @@ const profileStats = [
 export function HeroSection() {
   return (
     <section id="home" className="relative overflow-hidden pb-20 pt-16 sm:py-28">
+      <div className="pointer-events-none absolute left-1/2 top-0 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-cyan-400/10 blur-3xl" />
+      <div className="pointer-events-none absolute -left-32 top-1/3 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl" />
+      <div className="pointer-events-none absolute -right-40 bottom-10 h-96 w-96 rounded-full bg-violet-400/10 blur-3xl" />
+
       <Container>
         <div className="grid gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-center xl:gap-16">
           <MotionGroup className="max-w-4xl" amount={0.18}>
@@ -77,7 +85,7 @@ export function HeroSection() {
 
             <MotionItem kind="heading">
               <h1 className="max-w-4xl text-balance text-4xl font-semibold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
-                {profile.headline}
+                <TextReveal text={profile.headline} />
               </h1>
             </MotionItem>
 
@@ -89,34 +97,33 @@ export function HeroSection() {
 
             <MotionItem kind="cta">
               <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-                <Button
-                  asChild
-                  size="lg"
-                  className="rounded-full bg-white px-6 text-black shadow-lg shadow-black/20 transition-transform hover:-translate-y-0.5 hover:bg-zinc-200"
+                <MagneticButton
+                  as="a"
+                  href="#projects"
+                  className="group inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black shadow-lg shadow-black/20 hover:bg-zinc-200"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    scrollToSection("#projects");
+                  }}
                 >
-                  <a
-                    href="#projects"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      scrollToSection("#projects");
-                    }}
-                  >
-                    View selected work
-                    <ArrowRight data-icon="inline-end" />
-                  </a>
-                </Button>
+                  View selected work
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                    data-icon="inline-end"
+                  />
+                </MagneticButton>
 
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="rounded-full border-white/10 bg-white/[0.05] px-6 text-white backdrop-blur-md transition-transform hover:-translate-y-0.5 hover:bg-white/[0.1]"
+                <MagneticButton
+                  as="a"
+                  href={profile.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  strength={0.1}
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-6 py-3 text-sm font-semibold text-white backdrop-blur-md hover:bg-white/[0.1]"
                 >
-                  <a href={profile.github} target="_blank" rel="noreferrer">
-                    <FaGithub data-icon="inline-start" />
-                    GitHub
-                  </a>
-                </Button>
+                  <FaGithub data-icon="inline-start" />
+                  GitHub
+                </MagneticButton>
               </div>
             </MotionItem>
 
@@ -133,15 +140,50 @@ export function HeroSection() {
                 </MotionItem>
               ))}
             </MotionGroup>
+
+            <MotionItem kind="cta">
+              <button
+                type="button"
+                className="group mt-14 hidden items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-zinc-500 transition-colors hover:text-white md:inline-flex"
+                onClick={() => scrollToSection("#about")}
+              >
+                <span className="relative h-10 w-px overflow-hidden rounded-full bg-white/10">
+                  <span className="absolute inset-x-0 top-0 block h-1/2 w-px translate-y-full bg-gradient-to-b from-cyan-200 to-emerald-200 transition-transform duration-500 group-hover:translate-y-0" />
+                </span>
+                Scroll to About
+              </button>
+            </MotionItem>
           </MotionGroup>
 
           <MotionGroup amount={0.18}>
             <MotionItem kind="card" direction="right">
-              <SpotlightCard
-                className="overflow-hidden p-0"
-                spotlightColor="rgba(16, 185, 129, 0.16)"
-              >
-              <div className="relative p-7">
+              <div className="relative">
+                <div className="pointer-events-none absolute -left-8 -top-7 hidden gap-2 lg:grid">
+                  {stackItems.slice(0, 3).map((item, index) => {
+                    const Icon = item.icon;
+
+                    return (
+                      <FloatingElement
+                        key={item.label}
+                        delay={index * 0.35}
+                        distance={5 + index}
+                        className="rounded-full border border-white/10 bg-black/50 px-3 py-2 text-xs font-medium text-zinc-300 shadow-xl shadow-black/20 backdrop-blur-xl"
+                      >
+                        <span className="flex items-center gap-2">
+                          <Icon className="h-3.5 w-3.5 text-cyan-200" />
+                          {item.label}
+                        </span>
+                      </FloatingElement>
+                    );
+                  })}
+                </div>
+
+                <TiltCard>
+                  <SpotlightCard
+                    className="overflow-hidden p-0"
+                    spotlightColor="rgba(16, 185, 129, 0.16)"
+                  >
+                    <div className="relative p-7">
                 <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
                 <div className="pointer-events-none absolute -bottom-28 -left-24 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
 
@@ -269,8 +311,10 @@ export function HeroSection() {
                     </div>
                   </MotionItem>
                 </MotionGroup>
+                    </div>
+                  </SpotlightCard>
+                </TiltCard>
               </div>
-              </SpotlightCard>
             </MotionItem>
           </MotionGroup>
         </div>

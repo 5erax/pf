@@ -61,17 +61,17 @@ Mục tiêu: tạo hệ thống animation dùng lại, tránh hiệu ứng rải
 
 Mục tiêu: tạo ấn tượng rõ trong 3-5 giây đầu.
 
-- [ ] Split headline reveal theo dòng hoặc từ.
-- [ ] Status pill reveal trước headline.
-- [ ] Summary reveal sau headline.
-- [ ] CTA group reveal sau summary.
-- [ ] Magnetic CTA cho nút chính.
-- [ ] CTA arrow movement khi hover.
-- [ ] Profile card tilt nhẹ theo pointer.
-- [ ] Floating tech orbit trên desktop.
-- [ ] Tắt floating orbit trên mobile/reduced motion.
-- [ ] Scroll hint dẫn xuống About.
-- [ ] Background glow riêng cho Hero.
+- [x] Split headline reveal theo dòng hoặc từ.
+- [x] Status pill reveal trước headline.
+- [x] Summary reveal sau headline.
+- [x] CTA group reveal sau summary.
+- [x] Magnetic CTA cho nút chính.
+- [x] CTA arrow movement khi hover.
+- [x] Profile card tilt nhẹ theo pointer.
+- [x] Floating tech orbit trên desktop.
+- [x] Tắt floating orbit trên mobile/reduced motion.
+- [x] Scroll hint dẫn xuống About.
+- [x] Background glow riêng cho Hero.
 - [ ] Kiểm tra Hero mobile không quá nặng.
 
 ## Phase 4 — About Upgrade
