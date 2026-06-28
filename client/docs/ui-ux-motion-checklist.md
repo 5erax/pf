@@ -179,15 +179,15 @@ Mục tiêu: nền có identity nhưng không tranh nội dung.
 
 Mục tiêu: motion mạnh nhưng accessible.
 
-- [ ] Verify `prefers-reduced-motion`.
-- [ ] Không có flash nhanh.
-- [ ] Không có loop nổi bật gây khó chịu.
-- [ ] Focus visible rõ trên toàn site.
-- [ ] Tất cả button/link có accessible name.
-- [ ] Không còn hover-only information.
-- [ ] Keyboard navigation cho nav, showcase, project modal.
-- [ ] Screen reader labels cho interactive widgets.
-- [ ] Mobile không phụ thuộc pointer hover.
+- [x] Verify `prefers-reduced-motion`.
+- [x] Không có flash nhanh.
+- [x] Không có loop nổi bật gây khó chịu.
+- [x] Focus visible rõ trên toàn site.
+- [x] Tất cả button/link có accessible name.
+- [x] Không còn hover-only information.
+- [x] Keyboard navigation cho nav, showcase, project modal.
+- [x] Screen reader labels cho interactive widgets.
+- [x] Mobile không phụ thuộc pointer hover.
 
 ## Phase 12 — Performance Audit
 

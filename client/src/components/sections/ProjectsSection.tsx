@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion } from "motion/react";
 import {
   ArrowUpRight,
@@ -19,6 +20,7 @@ import { MotionChip, MotionGroup, MotionItem } from "@/components/common/Reveal"
 import { SpotlightCard } from "@/components/common/SpotlightCard";
 import { Button } from "@/components/ui/button";
 import { projects, type Project, type ProjectCategory } from "@/data/projects";
+import { useReducedMotionSafe } from "@/motion/hooks/useReducedMotionSafe";
 
 type ProjectVisual = {
   icon: LucideIcon;
@@ -159,6 +161,7 @@ function CaseStudyDrawer({
   const drawerRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
+  const shouldReduceMotion = useReducedMotionSafe();
 
   useEffect(() => {
     if (!project) return;
@@ -166,7 +169,11 @@ function CaseStudyDrawer({
     previousFocusRef.current =
       document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const originalOverflow = document.body.style.overflow;
+    const appRoot = document.getElementById("root");
+
     document.body.style.overflow = "hidden";
+    appRoot?.setAttribute("inert", "");
+    appRoot?.setAttribute("aria-hidden", "true");
     closeButtonRef.current?.focus();
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -199,6 +206,8 @@ function CaseStudyDrawer({
 
     return () => {
       document.body.style.overflow = originalOverflow;
+      appRoot?.removeAttribute("inert");
+      appRoot?.removeAttribute("aria-hidden");
       document.removeEventListener("keydown", handleKeyDown);
       previousFocusRef.current?.focus();
     };
@@ -206,7 +215,7 @@ function CaseStudyDrawer({
 
   if (!project) return null;
 
-  return (
+  return createPortal(
     <div
       role="dialog"
       aria-modal="true"
@@ -223,9 +232,12 @@ function CaseStudyDrawer({
 
       <motion.div
         ref={drawerRef}
-        initial={{ opacity: 0, x: 36 }}
+        initial={shouldReduceMotion ? false : { opacity: 0, x: 36 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+        transition={{
+          duration: shouldReduceMotion ? 0 : 0.28,
+          ease: [0.22, 1, 0.36, 1],
+        }}
         className="absolute inset-y-0 right-0 flex w-full max-w-2xl flex-col overflow-y-auto border-l border-white/10 bg-zinc-950/95 text-white shadow-2xl shadow-black/50"
       >
         <header className="relative border-b border-white/10 p-6">
@@ -376,7 +388,8 @@ function CaseStudyDrawer({
           </Button>
         </footer>
       </motion.div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

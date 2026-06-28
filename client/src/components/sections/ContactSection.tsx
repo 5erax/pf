@@ -220,14 +220,21 @@ export function ContactSection() {
                       size="lg"
                       variant="outline"
                       className="rounded-full border-white/10 bg-white/[0.05] px-6 text-white transition-transform hover:-translate-y-0.5 hover:bg-white/[0.1]"
-                      aria-live="polite"
+                      aria-label={
+                        isCopied
+                          ? `Copied ${profile.email}`
+                          : `Copy email ${profile.email}`
+                      }
                       onClick={() => {
                         void handleCopyEmail();
                       }}
                     >
-                      <Copy className="mr-2 h-4 w-4" />
+                      <Copy aria-hidden="true" className="mr-2 h-4 w-4" />
                       {isCopied ? "Copied" : "Copy email"}
                     </Button>
+                    <span className="sr-only" role="status" aria-live="polite">
+                      {isCopied ? `Copied ${profile.email} to clipboard.` : ""}
+                    </span>
 
                     <Button
                       asChild
