@@ -2,11 +2,13 @@ import {
   ArrowRight,
   CheckCircle2,
   Clock,
+  Copy,
   Mail,
   MapPin,
   MessageSquare,
   Send,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 import { Container } from "@/components/common/Container";
@@ -64,7 +66,30 @@ const contactNotes = [
   "React-based product development",
 ];
 
+const emailSubject = "Project collaboration";
+const emailPreview =
+  "Hi Lagna, I want to discuss a product idea, frontend build, or fullstack collaboration.";
+
 export function ContactSection() {
+  const [isCopied, setIsCopied] = useState(false);
+
+  useEffect(() => {
+    if (!isCopied) return;
+
+    const timeoutId = window.setTimeout(() => setIsCopied(false), 1800);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [isCopied]);
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      setIsCopied(true);
+    } catch {
+      setIsCopied(false);
+    }
+  };
+
   return (
     <section id="contact" className="relative border-t border-white/10 py-24">
       <Container>
@@ -87,9 +112,9 @@ export function ContactSection() {
                 </MotionItem>
 
                 <MotionItem kind="heading">
-                <h2 className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight text-white sm:text-5xl">
-                  Let&apos;s build a clean, scalable, and polished product.
-                </h2>
+                  <h2 className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight text-white sm:text-5xl">
+                    Let&apos;s turn a practical idea into a sharp product experience.
+                  </h2>
                 </MotionItem>
 
                 <MotionItem kind="paragraph">
@@ -125,37 +150,106 @@ export function ContactSection() {
                   })}
                 </MotionGroup>
 
-                <MotionItem kind="cta">
-                <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-                  <Button
-                    asChild
-                    size="lg"
-                    className="rounded-full bg-white px-6 text-black shadow-lg shadow-black/20 transition-transform hover:-translate-y-0.5 hover:bg-zinc-200"
-                  >
-                    <a href={`mailto:${profile.email}`}>
-                      <Send className="mr-2 h-4 w-4" />
-                      Send email
-                    </a>
-                  </Button>
+                <MotionItem kind="card">
+                  <div className="mt-8 overflow-hidden rounded-[1.5rem] border border-white/10 bg-black/35">
+                    <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-zinc-500">
+                          Mail command
+                        </p>
+                        <p className="mt-1 text-sm text-zinc-400">
+                          Ready-to-send collaboration opener
+                        </p>
+                      </div>
 
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="outline"
-                    className="rounded-full border-white/10 bg-white/[0.05] px-6 text-white transition-transform hover:-translate-y-0.5 hover:bg-white/[0.1]"
-                  >
-                    <a
-                      href="#projects"
-                      onClick={(event) => {
-                        event.preventDefault();
-                        scrollToSection("#projects");
+                      <span className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300">
+                        Available
+                      </span>
+                    </div>
+
+                    <div className="grid gap-4 p-5">
+                      <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                        <p className="text-xs uppercase tracking-[0.18em] text-zinc-500">
+                          To
+                        </p>
+                        <p className="mt-2 break-all font-medium text-white">
+                          {profile.email}
+                        </p>
+                      </div>
+
+                      <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                        <p className="text-xs uppercase tracking-[0.18em] text-zinc-500">
+                          Subject
+                        </p>
+                        <p className="mt-2 font-medium text-white">
+                          {emailSubject}
+                        </p>
+                      </div>
+
+                      <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                        <p className="text-xs uppercase tracking-[0.18em] text-zinc-500">
+                          Message
+                        </p>
+                        <p className="mt-2 leading-7 text-zinc-400">
+                          {emailPreview}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </MotionItem>
+
+                <MotionItem kind="cta">
+                  <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+                    <Button
+                      asChild
+                      size="lg"
+                      className="group rounded-full bg-white px-6 text-black shadow-lg shadow-white/10 ring-1 ring-white/20 transition hover:-translate-y-0.5 hover:bg-zinc-200 hover:shadow-white/20"
+                    >
+                      <a
+                        href={`mailto:${profile.email}?subject=${encodeURIComponent(
+                          emailSubject,
+                        )}`}
+                      >
+                        <Send className="mr-2 h-4 w-4 transition-transform duration-300 group-hover/button:-translate-y-0.5 group-hover/button:translate-x-0.5" />
+                        Send email
+                      </a>
+                    </Button>
+
+                    <Button
+                      type="button"
+                      size="lg"
+                      variant="outline"
+                      className="rounded-full border-white/10 bg-white/[0.05] px-6 text-white transition-transform hover:-translate-y-0.5 hover:bg-white/[0.1]"
+                      aria-live="polite"
+                      onClick={() => {
+                        void handleCopyEmail();
                       }}
                     >
-                      View projects
-                      <ArrowRight data-icon="inline-end" />
-                    </a>
-                  </Button>
-                </div>
+                      <Copy className="mr-2 h-4 w-4" />
+                      {isCopied ? "Copied" : "Copy email"}
+                    </Button>
+
+                    <Button
+                      asChild
+                      size="lg"
+                      variant="outline"
+                      className="rounded-full border-white/10 bg-white/[0.05] px-6 text-white transition-transform hover:-translate-y-0.5 hover:bg-white/[0.1]"
+                    >
+                      <a
+                        href="#projects"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          scrollToSection("#projects");
+                        }}
+                      >
+                        View projects
+                        <ArrowRight
+                          className="transition-transform duration-300 group-hover/button:translate-x-1"
+                          data-icon="inline-end"
+                        />
+                      </a>
+                    </Button>
+                  </div>
                 </MotionItem>
               </MotionGroup>
             </div>
@@ -192,7 +286,7 @@ export function ContactSection() {
                           className={`group flex items-center gap-4 rounded-2xl border p-4 transition ${
                             method.primary
                               ? "border-white/20 bg-white text-black hover:bg-zinc-200"
-                              : "border-white/10 bg-white/[0.045] text-white hover:border-white/20 hover:bg-white/[0.08]"
+                              : "border-white/10 bg-white/[0.045] text-white shadow-black/20 hover:border-cyan-300/30 hover:bg-white/[0.08] hover:shadow-xl hover:shadow-cyan-950/20"
                           }`}
                         >
                           <div

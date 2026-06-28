@@ -138,15 +138,15 @@ Mục tiêu: Projects có sức thuyết phục thật.
 
 Mục tiêu: Contact là điểm kết thúc mạnh, dễ chuyển đổi.
 
-- [ ] Concept mail composer hoặc command center.
-- [ ] Email copy button.
-- [ ] `Copied` state.
-- [ ] Hover email icon Send movement.
-- [ ] GitHub/LinkedIn cards có glow + arrow movement.
-- [ ] Availability status rõ.
-- [ ] Timezone/location rõ.
-- [ ] Final CTA pulse nhẹ, không loop mạnh.
-- [ ] Keyboard access cho copy email.
+- [x] Concept mail composer hoặc command center.
+- [x] Email copy button.
+- [x] `Copied` state.
+- [x] Hover email icon Send movement.
+- [x] GitHub/LinkedIn cards có glow + arrow movement.
+- [x] Availability status rõ.
+- [x] Timezone/location rõ.
+- [x] Final CTA pulse nhẹ, không loop mạnh.
+- [x] Keyboard access cho copy email.
 
 ## Phase 9 — Navigation & Scroll Polish
 
