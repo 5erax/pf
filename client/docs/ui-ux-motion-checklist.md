@@ -167,13 +167,13 @@ Mục tiêu: scroll có định hướng nhưng không rối.
 
 Mục tiêu: nền có identity nhưng không tranh nội dung.
 
-- [ ] Tạo section theme map.
-- [ ] Background glow đổi theo active section.
-- [ ] Desktop shader chạy chậm.
-- [ ] Mobile dùng gradient tĩnh.
-- [ ] Reduced motion tắt shader động.
-- [ ] Không dùng quá nhiều WebGL layer.
-- [ ] Kiểm tra background không làm text khó đọc.
+- [x] Tạo section theme map.
+- [x] Background glow đổi theo active section.
+- [x] Desktop shader chạy chậm.
+- [x] Mobile dùng gradient tĩnh.
+- [x] Reduced motion tắt shader động.
+- [x] Không dùng quá nhiều WebGL layer.
+- [x] Kiểm tra background không làm text khó đọc.
 
 ## Phase 11 — Accessibility Audit
 
