@@ -44,15 +44,15 @@ Mục tiêu: tạo hệ thống animation dùng lại, tránh hiệu ứng rải
 - [x] Tạo `useScrollDirection`.
 - [x] Tạo `useSectionProgress`.
 - [x] Tạo `useMousePosition`.
-- [ ] Tạo `SectionReveal`.
-- [ ] Tạo `TextReveal`.
-- [ ] Tạo `MagneticButton`.
-- [ ] Tạo `TiltCard`.
-- [ ] Tạo `ScrollScene`.
-- [ ] Tạo `ParallaxLayer`.
-- [ ] Tạo `GlowLine`.
-- [ ] Tạo `MotionGrid`.
-- [ ] Tạo `FloatingElement`.
+- [x] Tạo `SectionReveal`.
+- [x] Tạo `TextReveal`.
+- [x] Tạo `MagneticButton`.
+- [x] Tạo `TiltCard`.
+- [x] Tạo `ScrollScene`.
+- [x] Tạo `ParallaxLayer`.
+- [x] Tạo `GlowLine`.
+- [x] Tạo `MotionGrid`.
+- [x] Tạo `FloatingElement`.
 - [ ] Refactor `src/components/common/Reveal.tsx` để dùng motion foundation mới.
 - [ ] Reduced motion dùng fade-only reveal.
 - [ ] Audit nested motion để tránh render/animation quá sâu.
