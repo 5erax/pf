@@ -105,16 +105,16 @@ Mục tiêu: Skills trở thành hệ thống năng lực trực quan.
 
 Mục tiêu: Showcase là section thể hiện năng lực motion mạnh nhất.
 
-- [ ] Đổi concept section thành `Motion Showcase`.
-- [ ] Tạo sticky scroll scene.
-- [ ] Tạo 5 motion steps.
-- [ ] Text crossfade theo active step.
-- [ ] Animated preview bên phải.
-- [ ] Step progress dots.
-- [ ] Preview card morph hoặc shared layout transition.
-- [ ] Glow sweep có kiểm soát.
-- [ ] Mobile fallback không dùng sticky scene nặng.
-- [ ] Reduced motion fallback.
+- [x] Đổi concept section thành `Motion Showcase`.
+- [x] Tạo sticky scroll scene.
+- [x] Tạo 5 motion steps.
+- [x] Text crossfade theo active step.
+- [x] Animated preview bên phải.
+- [x] Step progress dots.
+- [x] Preview card morph hoặc shared layout transition.
+- [x] Glow sweep có kiểm soát.
+- [x] Mobile fallback không dùng sticky scene nặng.
+- [x] Reduced motion fallback.
 - [ ] Kiểm tra CLS và scroll smoothness.
 
 ## Phase 7 — Projects Case Study
