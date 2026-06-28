@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react";
+import { useState } from "react";
 import {
   CheckCircle2,
   Code2,
@@ -47,6 +48,13 @@ const coreStrengths = [
   "Type-safe implementation",
   "Responsive interface design",
   "API-ready frontend flows",
+];
+
+const constellationPositions = [
+  { x: 25, y: 26 },
+  { x: 74, y: 28 },
+  { x: 25, y: 72 },
+  { x: 74, y: 70 },
 ];
 
 function getSkillMeta(title: string, index: number): SkillMeta {
@@ -150,6 +158,8 @@ function getSkillMeta(title: string, index: number): SkillMeta {
 }
 
 export function SkillsSection() {
+  const [activeSkillGroup, setActiveSkillGroup] = useState<string | null>(null);
+
   return (
     <section id="skills" className="relative border-t border-white/10 py-24">
       <Container>
@@ -220,7 +230,129 @@ export function SkillsSection() {
           })}
         </MotionGroup>
 
-        <MotionGroup className="grid gap-5 md:grid-cols-2">
+        <MotionItem kind="card" className="mb-6 hidden lg:block">
+          <SpotlightCard
+            className="p-8"
+            spotlightColor="rgba(34, 211, 238, 0.12)"
+          >
+            <div className="mb-8 flex items-end justify-between gap-6">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.25em] text-zinc-500">
+                  Skills constellation
+                </p>
+                <h3 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+                  Capability map around fullstack delivery
+                </h3>
+              </div>
+
+              <p className="max-w-sm text-sm leading-7 text-zinc-400">
+                Focus or hover each node to see how the stack connects to the
+                center role without hiding the mobile grouped-chip fallback.
+              </p>
+            </div>
+
+            <div className="relative min-h-[34rem] overflow-hidden rounded-[1.75rem] border border-white/10 bg-black/30">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.12),transparent_38%)]" />
+
+              <svg
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 h-full w-full"
+                viewBox="0 0 100 100"
+                preserveAspectRatio="none"
+              >
+                {skillGroups.map((group, index) => {
+                  const position = constellationPositions[index];
+                  const isActive =
+                    activeSkillGroup === null || activeSkillGroup === group.title;
+
+                  return (
+                    <line
+                      key={group.title}
+                      x1="50"
+                      y1="50"
+                      x2={position.x}
+                      y2={position.y}
+                      className="transition-opacity duration-300"
+                      stroke={activeSkillGroup === group.title ? "#67e8f9" : "#ffffff"}
+                      strokeOpacity={isActive ? 0.32 : 0.08}
+                      strokeWidth={activeSkillGroup === group.title ? 0.55 : 0.28}
+                    />
+                  );
+                })}
+              </svg>
+
+              <div className="absolute left-1/2 top-1/2 z-10 flex h-40 w-40 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-cyan-300/25 bg-cyan-300/10 text-center shadow-2xl shadow-cyan-950/40">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-100">
+                    Center node
+                  </p>
+                  <p className="mt-2 text-xl font-semibold text-white">
+                    Fullstack Developer
+                  </p>
+                </div>
+              </div>
+
+              {skillGroups.map((group, index) => {
+                const meta = getSkillMeta(group.title, index);
+                const Icon = meta.icon;
+                const position = constellationPositions[index];
+                const descriptionId = `skill-node-${index}`;
+
+                return (
+                  <button
+                    key={group.title}
+                    type="button"
+                    aria-describedby={descriptionId}
+                    className="group absolute z-20 w-64 -translate-x-1/2 -translate-y-1/2 rounded-[1.5rem] border border-white/10 bg-zinc-950/80 p-4 text-left shadow-2xl shadow-black/30 backdrop-blur-xl transition duration-300 hover:-translate-y-[52%] hover:border-cyan-300/35 hover:bg-zinc-900/90 focus-visible:-translate-y-[52%] focus-visible:border-cyan-300/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/40"
+                    style={{
+                      left: `${position.x}%`,
+                      top: `${position.y}%`,
+                    }}
+                    onBlur={() => setActiveSkillGroup(null)}
+                    onFocus={() => setActiveSkillGroup(group.title)}
+                    onMouseEnter={() => setActiveSkillGroup(group.title)}
+                    onMouseLeave={() => setActiveSkillGroup(null)}
+                  >
+                    <span className="flex items-start gap-3">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.05]">
+                        <Icon className="h-5 w-5 text-cyan-100" />
+                      </span>
+
+                      <span>
+                        <span className="block text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
+                          {meta.label}
+                        </span>
+                        <span className="mt-1 block font-semibold text-white">
+                          {group.title}
+                        </span>
+                      </span>
+                    </span>
+
+                    <span className="mt-4 flex flex-wrap gap-1.5">
+                      {group.skills.slice(0, 4).map((skill) => (
+                        <span
+                          key={skill}
+                          className="rounded-full border border-white/10 bg-black/25 px-2.5 py-1 text-xs text-zinc-300"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </span>
+
+                    <span
+                      id={descriptionId}
+                      className="pointer-events-none absolute left-4 right-4 top-[calc(100%+0.75rem)] z-30 rounded-2xl border border-cyan-300/20 bg-black/90 p-3 text-xs leading-6 text-zinc-300 opacity-0 shadow-2xl shadow-black/40 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100"
+                    >
+                      {meta.description}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </SpotlightCard>
+        </MotionItem>
+
+        <MotionGroup className="grid gap-5 md:grid-cols-2 lg:hidden">
           {skillGroups.map((group, index) => {
             const meta = getSkillMeta(group.title, index);
             const Icon = meta.icon;

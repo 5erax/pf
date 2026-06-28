@@ -90,16 +90,16 @@ Mục tiêu: About kể rõ năng lực thực tế, không generic.
 
 Mục tiêu: Skills trở thành hệ thống năng lực trực quan.
 
-- [ ] Thiết kế desktop skill constellation.
-- [ ] Center node: Fullstack Developer.
-- [ ] Group nodes: Frontend, Backend, Tools, Engineering Practices.
-- [ ] Skill node hover/focus state.
-- [ ] Tooltip mô tả từng skill.
-- [ ] SVG connection lines.
-- [ ] Active/hover line highlight.
-- [ ] Mobile fallback dạng accordion hoặc grouped chips.
-- [ ] Tooltip không phụ thuộc hover-only.
-- [ ] Kiểm tra keyboard access cho skill nodes.
+- [x] Thiết kế desktop skill constellation.
+- [x] Center node: Fullstack Developer.
+- [x] Group nodes: Frontend, Backend, Tools, Engineering Practices.
+- [x] Skill node hover/focus state.
+- [x] Tooltip mô tả từng skill.
+- [x] SVG connection lines.
+- [x] Active/hover line highlight.
+- [x] Mobile fallback dạng accordion hoặc grouped chips.
+- [x] Tooltip không phụ thuộc hover-only.
+- [x] Kiểm tra keyboard access cho skill nodes.
 
 ## Phase 6 — Motion Showcase
 
