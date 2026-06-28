@@ -55,7 +55,7 @@ Mục tiêu: tạo hệ thống animation dùng lại, tránh hiệu ứng rải
 - [x] Tạo `FloatingElement`.
 - [x] Refactor `src/components/common/Reveal.tsx` để dùng motion foundation mới.
 - [x] Reduced motion dùng fade-only reveal.
-- [ ] Audit nested motion để tránh render/animation quá sâu.
+- [x] Audit nested motion để tránh render/animation quá sâu.
 
 ## Phase 3 — Hero Cinematic
 
