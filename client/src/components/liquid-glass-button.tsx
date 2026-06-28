@@ -252,7 +252,7 @@ const metalButtonVariants = (
  
   return {
     wrapper: cn(
-      "relative inline-flex transform-gpu rounded-md p-[1.25px] will-change-transform",
+      "relative inline-flex transform-gpu rounded-md p-[1.25px]",
       colors.outer,
     ),
     wrapperStyle: {
@@ -268,7 +268,7 @@ const metalButtonVariants = (
       transformOrigin: "center center",
     },
     inner: cn(
-      "absolute inset-[1px] transform-gpu rounded-lg will-change-transform",
+      "absolute inset-[1px] transform-gpu rounded-lg",
       colors.inner,
     ),
     innerStyle: {
@@ -278,7 +278,7 @@ const metalButtonVariants = (
         isHovered && !isPressed && !isTouchDevice ? "brightness(1.05)" : "none",
     },
     button: cn(
-      "relative z-10 m-[1px] rounded-md inline-flex h-11 transform-gpu cursor-pointer items-center justify-center overflow-hidden rounded-md px-6 py-2 text-sm leading-none font-semibold will-change-transform outline-none",
+      "relative z-10 m-[1px] rounded-md inline-flex h-11 transform-gpu cursor-pointer items-center justify-center overflow-hidden rounded-md px-6 py-2 text-sm leading-none font-semibold outline-none",
       colors.button,
       colors.textColor,
       colors.textShadow,

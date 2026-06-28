@@ -1,9 +1,14 @@
 "use client";
 
-import { MeshGradient } from "@paper-design/shaders-react";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 
 import { useActiveSection } from "@/hooks/useActiveSection";
+
+const LazyMeshGradient = lazy(() =>
+  import("@paper-design/shaders-react").then((module) => ({
+    default: module.MeshGradient,
+  })),
+);
 
 const sectionIds = ["home", "about", "skills", "showcase", "projects", "contact"];
 
@@ -81,11 +86,13 @@ export default function BackgroundPaperShaders() {
       />
 
       {animatedBackgroundEnabled ? (
-        <MeshGradient
-          className="absolute inset-0 size-full opacity-30"
-          colors={[...theme.shaderColors]}
-          speed={0.08}
-        />
+        <Suspense fallback={null}>
+          <LazyMeshGradient
+            className="absolute inset-0 size-full opacity-30"
+            colors={[...theme.shaderColors]}
+            speed={0.08}
+          />
+        </Suspense>
       ) : null}
 
       <div className="absolute inset-0 bg-black/55" />

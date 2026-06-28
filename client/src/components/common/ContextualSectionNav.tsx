@@ -75,10 +75,10 @@ export function ContextualSectionNav() {
                     >
                       <span
                         className={cn(
-                          "relative z-10 block rounded-full transition-[width,height,background-color] duration-300",
+                          "relative z-10 block h-1.5 w-4 rounded-full transition-[transform,background-color,opacity] duration-300",
                           isActive
-                            ? "h-1.5 w-4 bg-cyan-200"
-                            : "size-1 bg-zinc-600 group-hover:bg-zinc-300",
+                            ? "scale-x-100 bg-cyan-200 opacity-100"
+                            : "scale-x-[0.28] bg-zinc-600 opacity-80 group-hover:bg-zinc-300 group-hover:opacity-100",
                         )}
                       />
                       {isActive ? (

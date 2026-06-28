@@ -202,8 +202,8 @@ Mục tiêu: giữ portfolio mượt và nhẹ.
 - [ ] Không CLS đáng kể khi scroll/load.
 - [ ] Ảnh project được optimize.
 - [ ] Ảnh dưới fold lazy-load.
-- [ ] Không animate layout properties.
-- [ ] `will-change` chỉ dùng ở phần cần thiết.
+- [x] Không animate layout properties.
+- [x] `will-change` chỉ dùng ở phần cần thiết.
 
 ## Phase 13 — Final Review
 
