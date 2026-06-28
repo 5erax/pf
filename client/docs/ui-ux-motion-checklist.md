@@ -40,10 +40,10 @@ Mục tiêu: tạo hệ thống animation dùng lại, tránh hiệu ứng rải
 - [x] Tạo `src/motion/tokens.ts`.
 - [x] Tạo `src/motion/variants.ts`.
 - [x] Tạo `src/motion/transitions.ts`.
-- [ ] Tạo `useReducedMotionSafe`.
-- [ ] Tạo `useScrollDirection`.
-- [ ] Tạo `useSectionProgress`.
-- [ ] Tạo `useMousePosition`.
+- [x] Tạo `useReducedMotionSafe`.
+- [x] Tạo `useScrollDirection`.
+- [x] Tạo `useSectionProgress`.
+- [x] Tạo `useMousePosition`.
 - [ ] Tạo `SectionReveal`.
 - [ ] Tạo `TextReveal`.
 - [ ] Tạo `MagneticButton`.
