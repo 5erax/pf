@@ -78,13 +78,13 @@ Mục tiêu: tạo ấn tượng rõ trong 3-5 giây đầu.
 
 Mục tiêu: About kể rõ năng lực thực tế, không generic.
 
-- [ ] Viết lại copy About theo năng lực cụ thể.
-- [ ] Code preview có cursor blink nhẹ.
-- [ ] Dòng code highlight lần lượt.
-- [ ] Value cards reveal theo stagger.
-- [ ] Hover card có border glow nhẹ.
-- [ ] Kiểm tra heading hierarchy.
-- [ ] Kiểm tra readable line length trên mobile.
+- [x] Viết lại copy About theo năng lực cụ thể.
+- [x] Code preview có cursor blink nhẹ.
+- [x] Dòng code highlight lần lượt.
+- [x] Value cards reveal theo stagger.
+- [x] Hover card có border glow nhẹ.
+- [x] Kiểm tra heading hierarchy.
+- [x] Kiểm tra readable line length trên mobile.
 
 ## Phase 5 — Skills Constellation
 

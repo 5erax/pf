@@ -24,19 +24,19 @@ const values: ValueItem[] = [
     icon: Code2,
     title: "Frontend architecture",
     description:
-      "I build React interfaces with clear components, reusable patterns, and a structure that is easy to maintain.",
+      "I split React features into readable components, predictable state boundaries, and UI primitives that can be reused without slowing delivery.",
   },
   {
     icon: ServerCog,
     title: "Fullstack integration",
     description:
-      "I connect UI flows with APIs, authentication, backend logic, and real product data requirements.",
+      "I connect interfaces to APIs with clear request flows, safe loading states, auth-aware behavior, and data shapes that match real product use.",
   },
   {
     icon: MonitorSmartphone,
     title: "Responsive product UI",
     description:
-      "I design interfaces that stay clean, readable, and usable across desktop, tablet, and mobile screens.",
+      "I tune spacing, hierarchy, and interaction states so screens stay usable on desktop, tablet, and mobile without layout surprises.",
   },
 ];
 
@@ -62,6 +62,66 @@ const metrics = [
   },
 ];
 
+const codeLines = [
+  {
+    indent: "",
+    content: (
+      <>
+        <span className="text-purple-300">const</span>{" "}
+        <span className="text-cyan-300">workflow</span>{" "}
+        <span className="text-zinc-600">=</span>{" "}
+        <span className="text-emerald-300">{"{"}</span>
+      </>
+    ),
+  },
+  {
+    indent: "pl-4",
+    content: (
+      <>
+        <span className="text-zinc-400">name:</span>{" "}
+        <span className="text-white">&quot;{profile.name}&quot;</span>,
+      </>
+    ),
+  },
+  {
+    indent: "pl-4",
+    content: (
+      <>
+        <span className="text-zinc-400">stack:</span>{" "}
+        <span className="text-white">
+          [&quot;React&quot;, &quot;TypeScript&quot;, &quot;Node.js&quot;]
+        </span>
+        ,
+      </>
+    ),
+  },
+  {
+    indent: "pl-4",
+    content: (
+      <>
+        <span className="text-zinc-400">build:</span>{" "}
+        <span className="text-white">&quot;fast, readable product UI&quot;</span>,
+      </>
+    ),
+  },
+  {
+    indent: "pl-4",
+    content: (
+      <>
+        <span className="text-zinc-400">guardrails:</span>{" "}
+        <span className="text-white">
+          [&quot;responsive&quot;, &quot;accessible&quot;, &quot;maintainable&quot;]
+        </span>
+        ,
+      </>
+    ),
+  },
+  {
+    indent: "",
+    content: <span className="text-emerald-300">{"}"}</span>,
+  },
+];
+
 function CodePreviewCard() {
   return (
     <div className="relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-black/40 p-5">
@@ -81,36 +141,20 @@ function CodePreviewCard() {
           </span>
         </div>
 
-        <div className="space-y-3 font-mono text-xs leading-6 text-zinc-500">
-          <p>
-            <span className="text-purple-300">const</span>{" "}
-            <span className="text-cyan-300">developer</span>{" "}
-            <span className="text-zinc-600">=</span>{" "}
-            <span className="text-emerald-300">{"{"}</span>
-          </p>
-
-          <p className="pl-4">
-            <span className="text-zinc-400">name:</span>{" "}
-            <span className="text-white">&quot;{profile.name}&quot;</span>,
-          </p>
-
-          <p className="pl-4">
-            <span className="text-zinc-400">stack:</span>{" "}
-            <span className="text-white">
-              [&quot;React&quot;, &quot;TypeScript&quot;, &quot;Node.js&quot;]
-            </span>
-            ,
-          </p>
-
-          <p className="pl-4">
-            <span className="text-zinc-400">focus:</span>{" "}
-            <span className="text-white">&quot;Clean product UI&quot;</span>,
-          </p>
-
-          <p>
-            <span className="text-emerald-300">{"}"}</span>
-          </p>
-        </div>
+        <MotionGroup compact className="space-y-3 font-mono text-xs leading-6 text-zinc-500">
+          {codeLines.map((line, index) => (
+            <MotionItem
+              key={index}
+              kind="chip"
+              className={`relative rounded-lg border border-transparent px-2 py-1 transition-colors duration-300 hover:border-cyan-300/20 hover:bg-cyan-300/5 ${line.indent}`}
+            >
+              {line.content}
+              {index === codeLines.length - 1 ? (
+                <span className="ml-1 inline-block h-4 w-px translate-y-0.5 animate-pulse bg-cyan-200" />
+              ) : null}
+            </MotionItem>
+          ))}
+        </MotionGroup>
       </div>
     </div>
   );
@@ -131,8 +175,7 @@ export function AboutSection() {
 
               <MotionItem kind="heading">
               <h2 className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">
-                I turn ideas into clean, scalable, and production-ready web
-                experiences.
+                I build product interfaces that stay clear, fast, and maintainable as the app grows.
               </h2>
               </MotionItem>
             </div>
@@ -140,10 +183,9 @@ export function AboutSection() {
             <MotionItem kind="paragraph" direction="right">
             <p className="max-w-2xl text-base leading-8 text-zinc-400 sm:text-lg">
               I am {profile.name}, also known as @{profile.alias}. I focus on
-              building modern fullstack applications with React, TypeScript,
-              Node.js, and MongoDB. I care about clean UI, maintainable
-              code, practical architecture, and user flows that feel simple and
-              reliable.
+              building React and TypeScript product surfaces that connect cleanly
+              to backend data, stay responsive across devices, and make complex
+              workflows feel direct instead of noisy.
             </p>
             </MotionItem>
           </MotionGroup>
@@ -165,10 +207,10 @@ export function AboutSection() {
                   </h3>
 
                   <p className="mt-4 leading-7 text-zinc-400">
-                    I do not only focus on making screens look good. I care
-                    about how the code is organized, how users move through the
-                    product, and how the interface can grow without becoming
-                    difficult to maintain.
+                    My work combines UI polish with engineering guardrails:
+                    reusable component structure, clear API handoffs, predictable
+                    interaction states, and motion that supports the user instead
+                    of distracting from the task.
                   </p>
 
                   <div className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -246,8 +288,8 @@ export function AboutSection() {
 
               return (
                 <MotionItem key={item.title} kind="card">
-                <SpotlightCard
-                  className="p-6"
+                  <SpotlightCard
+                  className="p-6 transition-colors duration-300 hover:border-cyan-300/30"
                   spotlightColor="rgba(255, 255, 255, 0.12)"
                 >
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.05]">
