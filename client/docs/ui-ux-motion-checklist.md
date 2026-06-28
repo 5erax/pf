@@ -207,13 +207,13 @@ Mục tiêu: giữ portfolio mượt và nhẹ.
 
 ## Phase 13 — Final Review
 
-- [ ] Responsive audit: mobile, tablet, desktop, wide.
-- [ ] Keyboard-only audit.
-- [ ] Visual QA toàn page.
-- [ ] SEO/social preview audit.
-- [ ] README cập nhật theo implementation cuối.
+- [x] Responsive audit: mobile, tablet, desktop, wide.
+- [x] Keyboard-only audit.
+- [x] Visual QA toàn page.
+- [x] SEO/social preview audit.
+- [x] README cập nhật theo implementation cuối.
 - [ ] Deploy preview review.
-- [ ] Ghi lại các tradeoff còn lại.
+- [x] Ghi lại các tradeoff còn lại.
 
 ## Current Verified Commands
 

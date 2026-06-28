@@ -244,7 +244,7 @@ function CaseStudyDrawer({
           <button
             ref={closeButtonRef}
             type="button"
-            className="absolute right-4 top-4 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-sm text-zinc-300 transition hover:bg-white/[0.1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/50"
+            className="absolute right-4 top-4 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-sm text-zinc-300 transition hover:bg-white/[0.1] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-white focus-visible:ring-2 focus-visible:ring-cyan-300/50"
             onClick={onClose}
           >
             Close

@@ -1,4 +1,12 @@
-import { lazy, type ReactNode, Suspense, useEffect, useRef, useState } from "react";
+import {
+  lazy,
+  type ReactNode,
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { MainLayout } from "@/components/layout/MainLayout";
 import { Reveal } from "@/components/common/Reveal";
@@ -31,14 +39,6 @@ const InteractiveImageAccordionSection = lazy(loadInteractiveImageAccordionSecti
 const ProjectsSection = lazy(loadProjectsSection);
 const ContactSection = lazy(loadContactSection);
 
-const deferredSectionPreloads = [
-  loadAboutSection,
-  loadSkillsSection,
-  loadInteractiveImageAccordionSection,
-  loadProjectsSection,
-  loadContactSection,
-];
-
 const sectionFallbackHeights = {
   about: "min-h-[48rem]",
   skills: "min-h-[56rem]",
@@ -70,14 +70,35 @@ function DeferredSection({
 }) {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const [shouldRender, setShouldRender] = useState(
-    () => typeof window !== "undefined" && !("IntersectionObserver" in window),
+    () =>
+      typeof window !== "undefined" &&
+      (!("IntersectionObserver" in window) || window.location.hash === `#${id}`),
   );
+
+  const checkShouldRender = useCallback(() => {
+    if (shouldRender) {
+      return;
+    }
+
+    const node = rootRef.current;
+    if (!node) {
+      return;
+    }
+
+    const rect = node.getBoundingClientRect();
+    const preloadMargin = Math.max(window.innerHeight * 0.75, 640);
+
+    if (rect.top < window.innerHeight + preloadMargin && rect.bottom > -preloadMargin) {
+      setShouldRender(true);
+    }
+  }, [shouldRender]);
 
   useEffect(() => {
     if (shouldRender) {
       return;
     }
 
+    const runCheck = () => window.requestAnimationFrame(checkShouldRender);
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -93,8 +114,17 @@ function DeferredSection({
       observer.observe(node);
     }
 
-    return () => observer.disconnect();
-  }, [shouldRender]);
+    window.addEventListener("scroll", runCheck, { passive: true });
+    window.addEventListener("resize", runCheck);
+    window.addEventListener("hashchange", runCheck);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", runCheck);
+      window.removeEventListener("resize", runCheck);
+      window.removeEventListener("hashchange", runCheck);
+    };
+  }, [checkShouldRender, shouldRender]);
 
   if (shouldRender) {
     return <Suspense fallback={<SectionFallback id={id} />}>{children}</Suspense>;
@@ -108,22 +138,6 @@ function DeferredSection({
 }
 
 function App() {
-  useEffect(() => {
-    const preloadSections = () => {
-      deferredSectionPreloads.forEach((preloadSection, index) => {
-        window.setTimeout(() => {
-          void preloadSection();
-        }, index * 160);
-      });
-    };
-
-    const schedulePreload = window.setTimeout(preloadSections, 3600);
-
-    return () => {
-      window.clearTimeout(schedulePreload);
-    };
-  }, []);
-
   return (
     <MainLayout>
       <Reveal index={0} label="Home">

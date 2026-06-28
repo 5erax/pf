@@ -303,7 +303,7 @@ export function SkillsSection() {
                     key={group.title}
                     type="button"
                     aria-describedby={descriptionId}
-                    className="group absolute z-20 w-64 -translate-x-1/2 -translate-y-1/2 rounded-[1.5rem] border border-white/10 bg-zinc-950/80 p-4 text-left shadow-2xl shadow-black/30 backdrop-blur-xl transition duration-300 hover:-translate-y-[52%] hover:border-cyan-300/35 hover:bg-zinc-900/90 focus-visible:-translate-y-[52%] focus-visible:border-cyan-300/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/40"
+                    className="group absolute z-20 w-64 -translate-x-1/2 -translate-y-1/2 rounded-[1.5rem] border border-white/10 bg-zinc-950/80 p-4 text-left shadow-2xl shadow-black/30 backdrop-blur-xl transition duration-300 hover:-translate-y-[52%] hover:border-cyan-300/35 hover:bg-zinc-900/90 focus-visible:-translate-y-[52%] focus-visible:border-cyan-300/50 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-white focus-visible:ring-2 focus-visible:ring-cyan-300/40"
                     style={{
                       left: `${position.x}%`,
                       top: `${position.y}%`,
