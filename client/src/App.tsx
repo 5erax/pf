@@ -1,32 +1,158 @@
+import { lazy, type ReactNode, Suspense, useEffect, useRef, useState } from "react";
+
 import { MainLayout } from "@/components/layout/MainLayout";
 import { Reveal } from "@/components/common/Reveal";
-import { AboutSection } from "@/components/sections/AboutSection";
-import { ContactSection } from "@/components/sections/ContactSection";
 import { HeroSection } from "@/components/sections/HeroSection";
-import { InteractiveImageAccordionSection } from "@/components/sections/InteractiveImageAccordionSection";
-import { ProjectsSection } from "@/components/sections/ProjectsSection";
-import { SkillsSection } from "@/components/sections/SkillsSection";
+
+const loadAboutSection = () =>
+  import("@/components/sections/AboutSection").then((module) => ({
+    default: module.AboutSection,
+  }));
+const loadSkillsSection = () =>
+  import("@/components/sections/SkillsSection").then((module) => ({
+    default: module.SkillsSection,
+  }));
+const loadInteractiveImageAccordionSection = () =>
+  import("@/components/sections/InteractiveImageAccordionSection").then((module) => ({
+    default: module.InteractiveImageAccordionSection,
+  }));
+const loadProjectsSection = () =>
+  import("@/components/sections/ProjectsSection").then((module) => ({
+    default: module.ProjectsSection,
+  }));
+const loadContactSection = () =>
+  import("@/components/sections/ContactSection").then((module) => ({
+    default: module.ContactSection,
+  }));
+
+const AboutSection = lazy(loadAboutSection);
+const SkillsSection = lazy(loadSkillsSection);
+const InteractiveImageAccordionSection = lazy(loadInteractiveImageAccordionSection);
+const ProjectsSection = lazy(loadProjectsSection);
+const ContactSection = lazy(loadContactSection);
+
+const deferredSectionPreloads = [
+  loadAboutSection,
+  loadSkillsSection,
+  loadInteractiveImageAccordionSection,
+  loadProjectsSection,
+  loadContactSection,
+];
+
+const sectionFallbackHeights = {
+  about: "min-h-[48rem]",
+  skills: "min-h-[56rem]",
+  showcase: "min-h-[58rem]",
+  projects: "min-h-[72rem]",
+  contact: "min-h-[42rem]",
+};
+
+function SectionFallback({
+  id,
+}: {
+  id: keyof typeof sectionFallbackHeights;
+}) {
+  return (
+    <section
+      id={id}
+      className={`relative border-t border-white/10 py-24 ${sectionFallbackHeights[id]}`}
+      aria-busy="true"
+    />
+  );
+}
+
+function DeferredSection({
+  id,
+  children,
+}: {
+  id: keyof typeof sectionFallbackHeights;
+  children: ReactNode;
+}) {
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const [shouldRender, setShouldRender] = useState(
+    () => typeof window !== "undefined" && !("IntersectionObserver" in window),
+  );
+
+  useEffect(() => {
+    if (shouldRender) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldRender(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "900px 0px" },
+    );
+
+    const node = rootRef.current;
+    if (node) {
+      observer.observe(node);
+    }
+
+    return () => observer.disconnect();
+  }, [shouldRender]);
+
+  if (shouldRender) {
+    return <Suspense fallback={<SectionFallback id={id} />}>{children}</Suspense>;
+  }
+
+  return (
+    <div ref={rootRef}>
+      <SectionFallback id={id} />
+    </div>
+  );
+}
 
 function App() {
+  useEffect(() => {
+    const preloadSections = () => {
+      deferredSectionPreloads.forEach((preloadSection, index) => {
+        window.setTimeout(() => {
+          void preloadSection();
+        }, index * 160);
+      });
+    };
+
+    const schedulePreload = window.setTimeout(preloadSections, 3600);
+
+    return () => {
+      window.clearTimeout(schedulePreload);
+    };
+  }, []);
+
   return (
     <MainLayout>
       <Reveal index={0} label="Home">
         <HeroSection />
       </Reveal>
       <Reveal index={1} label="About">
-        <AboutSection />
+        <DeferredSection id="about">
+          <AboutSection />
+        </DeferredSection>
       </Reveal>
       <Reveal index={2} label="Skills">
-        <SkillsSection />
+        <DeferredSection id="skills">
+          <SkillsSection />
+        </DeferredSection>
       </Reveal>
       <Reveal index={3} label="Showcase">
-        <InteractiveImageAccordionSection />
+        <DeferredSection id="showcase">
+          <InteractiveImageAccordionSection />
+        </DeferredSection>
       </Reveal>
       <Reveal index={4} label="Projects">
-        <ProjectsSection />
+        <DeferredSection id="projects">
+          <ProjectsSection />
+        </DeferredSection>
       </Reveal>
       <Reveal index={5} label="Contact">
-        <ContactSection />
+        <DeferredSection id="contact">
+          <ContactSection />
+        </DeferredSection>
       </Reveal>
     </MainLayout>
   );

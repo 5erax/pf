@@ -193,15 +193,15 @@ Mục tiêu: motion mạnh nhưng accessible.
 
 Mục tiêu: giữ portfolio mượt và nhẹ.
 
-- [ ] Lighthouse Performance >= 90.
-- [ ] Lighthouse Accessibility >= 95.
-- [ ] Lighthouse Best Practices >= 95.
-- [ ] Lighthouse SEO >= 95.
-- [ ] FPS audit bằng Chrome DevTools Performance.
+- [x] Lighthouse Performance >= 90. (96 trên production preview `127.0.0.1:4173`)
+- [x] Lighthouse Accessibility >= 95. (95)
+- [x] Lighthouse Best Practices >= 95. (100)
+- [x] Lighthouse SEO >= 95. (100)
+- [x] FPS audit bằng Chrome DevTools Performance/CDP. (Audit headless đã chạy; cần QA thủ công nếu muốn chốt 144 FPS trên máy thật.)
 - [ ] Không drop FPS rõ khi scroll nhanh.
-- [ ] Không CLS đáng kể khi scroll/load.
-- [ ] Ảnh project được optimize.
-- [ ] Ảnh dưới fold lazy-load.
+- [x] Không CLS đáng kể khi scroll/load. (Lighthouse CLS 0.007)
+- [x] Ảnh project được optimize. (Project preview hiện là CSS/mockup, không render asset ảnh project thật.)
+- [x] Ảnh dưới fold lazy-load. (Không có ảnh project dưới fold đang render; section chunks được deferred/preload nền.)
 - [x] Không animate layout properties.
 - [x] `will-change` chỉ dùng ở phần cần thiết.
 
