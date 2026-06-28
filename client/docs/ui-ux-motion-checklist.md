@@ -121,18 +121,18 @@ Mục tiêu: Showcase là section thể hiện năng lực motion mạnh nhất.
 
 Mục tiêu: Projects có sức thuyết phục thật.
 
-- [ ] Thêm project role.
-- [ ] Thêm one-liner cho từng project.
+- [x] Thêm project role.
+- [x] Thêm one-liner cho từng project.
 - [ ] Thêm screenshot hoặc preview thật khi có asset.
-- [ ] Project card có challenge/solution/outcome rõ.
-- [ ] Hover card border glow.
-- [ ] CTA arrow movement.
-- [ ] Project filter: All / Frontend / Fullstack / Mobile / AI.
-- [ ] Case study modal hoặc drawer.
-- [ ] Modal có Problem / Role / Tech decisions / Key screens / Lessons learned / Links.
-- [ ] Shared layout transition từ card sang modal.
-- [ ] Modal keyboard/focus management.
-- [ ] Không render Live Demo nếu URL không thật.
+- [x] Project card có challenge/solution/outcome rõ.
+- [x] Hover card border glow.
+- [x] CTA arrow movement.
+- [x] Project filter: All / Frontend / Fullstack / Mobile / AI.
+- [x] Case study modal hoặc drawer.
+- [x] Modal có Problem / Role / Tech decisions / Key screens / Lessons learned / Links.
+- [x] Shared layout transition từ card sang modal.
+- [x] Modal keyboard/focus management.
+- [x] Không render Live Demo nếu URL không thật.
 
 ## Phase 8 — Contact Upgrade
 
