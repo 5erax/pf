@@ -8,6 +8,8 @@ import {
 } from "@/components/ui/tubelight-navbar";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { scrollToSection } from "@/lib/scroll";
+import { cn } from "@/lib/utils";
+import { useScrollDirection } from "@/motion/hooks/useScrollDirection";
 
 const navItems: NavItem[] = [
   {
@@ -46,6 +48,9 @@ const sectionIds = ["home", "about", "skills", "showcase", "projects", "contact"
 
 export function Navbar() {
   const activeSection = useActiveSection(sectionIds);
+  const scrollDirection = useScrollDirection(10);
+  const isHeroActive = activeSection === "home";
+  const shouldHideHeader = scrollDirection === "down" && !isHeroActive;
 
   const activeItemName =
     navItems.find((item) => item.url === `#${activeSection}`)?.name ??
@@ -57,9 +62,16 @@ export function Navbar() {
 
   return (
     <>
+      <div id="primary-header-sentinel" className="h-px" aria-hidden="true" />
       <header
         id="primary-header"
-        className="relative z-50 border-b border-white/10 bg-black/45 backdrop-blur-2xl"
+        className={cn(
+          "fixed inset-x-0 top-0 z-50 border-b backdrop-blur-2xl transition duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          isHeroActive
+            ? "border-white/5 bg-black/20"
+            : "border-white/10 bg-black/72 shadow-2xl shadow-black/25",
+          shouldHideHeader ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100",
+        )}
       >
         <Container>
           <nav

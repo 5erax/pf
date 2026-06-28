@@ -152,16 +152,16 @@ Mục tiêu: Contact là điểm kết thúc mạnh, dễ chuyển đổi.
 
 Mục tiêu: scroll có định hướng nhưng không rối.
 
-- [ ] Scroll progress line có section markers.
-- [ ] Marker click để điều hướng section.
-- [ ] Marker hover/focus hiện section label.
-- [ ] Mobile chỉ giữ progress line đơn giản.
-- [ ] Header trong suốt hơn ở Hero.
-- [ ] Header nền đậm hơn khi scroll.
-- [ ] Header có thể ẩn nhẹ khi scroll nhanh xuống.
-- [ ] Header hiện lại khi scroll lên.
-- [ ] Contextual nav chỉ hiển thị khi thực sự cần.
-- [ ] Không dùng mandatory scroll snap toàn trang.
+- [x] Scroll progress line có section markers.
+- [x] Marker click để điều hướng section.
+- [x] Marker hover/focus hiện section label.
+- [x] Mobile chỉ giữ progress line đơn giản.
+- [x] Header trong suốt hơn ở Hero.
+- [x] Header nền đậm hơn khi scroll.
+- [x] Header có thể ẩn nhẹ khi scroll nhanh xuống.
+- [x] Header hiện lại khi scroll lên.
+- [x] Contextual nav chỉ hiển thị khi thực sự cần.
+- [x] Không dùng mandatory scroll snap toàn trang.
 
 ## Phase 10 — Background System
 
